@@ -1,0 +1,34 @@
+# Libft
+LIBFT_DIR = ../../../libs/Libft-2.1.1
+LIBFT_HEADER_DIR = $(LIBFT_DIR)/include
+LIBFT = $(LIBFT_DIR)/libft.a
+
+HEADER_DIR = ..
+SOURCE_DIR = ..
+OBJS_DIR = ..
+HEADER = tokenizer.h
+
+CFILES = $(SOURCE_DIR)/fn_helpers.c $(SOURCE_DIR)/fn_token_lists.c \
+		$(SOURCE_DIR)/fn_tokenizer.c tester.c
+OBJS = $(CFILES:.c=.o)
+
+CFLAGS = -Wall -Wextra -Werror -I $(LIBFT_HEADER_DIR) -I $(HEADER_DIR)
+
+all : test
+
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_DIR)
+
+test : $(OBJS) $(LIBFT)
+	cc $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -o test
+
+$(OBJS_DIR)/%.o: ../%.c $(HEADER)
+	cc $(CFLAGS) -c $< -L$(LIBFT_DIR) -lft -o $@
+
+clean:
+	rm -f $(OBJS)
+
+fclean: clean
+	rm -f test
+
+re: fclean all
