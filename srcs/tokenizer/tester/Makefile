@@ -9,7 +9,8 @@ OBJS_DIR = ..
 HEADER = tokenizer.h
 
 CFILES = $(SOURCE_DIR)/fn_helpers.c $(SOURCE_DIR)/fn_token_lists.c \
-		$(SOURCE_DIR)/tokenizer.c tester.c
+		$(SOURCE_DIR)/tokenizer.c $(SOURCE_DIR)/fn_crawl.c tester.c
+		
 OBJS = $(CFILES:.c=.o)
 
 CFLAGS = -Wall -Wextra -Werror -I $(LIBFT_HEADER_DIR) -I $(HEADER_DIR)

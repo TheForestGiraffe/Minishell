@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:37:21 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/05 19:37:40 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/10/06 15:36:31 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ t_token	*tls_create(char *str)
 	else
 		new->content = NULL;
 	new->next = NULL;
+	new->type = UNSET;
 	return (new);
 }

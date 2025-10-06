@@ -2,6 +2,19 @@
 
 void	print_list(t_token *ls_token)
 {
+	char *t_str[] = 
+	{
+	"WORD",
+	"PIPE",
+	"INPUT",
+	"OUTPUT",
+	"RINPUT",
+	"ROUTPUT",
+	"S_QT",
+	"D_QT"
+	};
+
+
 	if (ls_token == NULL)
 	{
 		printf ("list is NULL\n");
@@ -9,10 +22,12 @@ void	print_list(t_token *ls_token)
 	}
 	while (ls_token->next)
 	{
-		printf ("%s\n", ls_token->content);
+		printf ("%-25s type:%s\n", ls_token->content, t_str[ls_token->type]);
+
 		ls_token = ls_token->next;
 	}
-	printf (">%s<\n", ls_token->content);
+	printf ("%-25s type:%s\n", ls_token->content, t_str[ls_token->type]);
+
 	
 }
 
@@ -25,8 +40,10 @@ int	main()
 	// char *str = "";
 	// char *str = "<<<<       ";
 	// char *str = "<		< <<       ";
-	char *str = "       the \"Weather\"   is | very co<ld but it is not cold>>er 'than' yester<<day";
+	// char *str = "       the \"Weather\"   is | very co<ld but it is not cold>>er 'than this' yester<<day";
 	// char *str = "<  >";
+	char *str = "this is a 'tom|ato' but \"falafel is better\" than nothi|ng at all";
+
 
 	ls_token = tokenizer(str);
 	if (!ls_token)
