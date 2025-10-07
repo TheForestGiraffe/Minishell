@@ -6,11 +6,11 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:36:45 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/06 17:39:37 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/10/07 13:15:22 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
+#include "local_tokenizer.h"
 
 static int	handle_quotes(char *buf, char **p, t_token **head)
 {
@@ -43,7 +43,7 @@ static int	handle_redirects(char *buf, char **p, t_token **head)
 	buf[0] = str[0];
 	buf[1] = str[1];
 	buf[2] = '\0';
-	(*p)++;
+	(*p) += 2;
 	current = tls_create (ft_strdup (buf));
 	if (!current)
 		return (-1);

@@ -6,11 +6,11 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:36:45 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/06 17:40:02 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/10/07 13:15:39 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
+#include "local_tokenizer.h"
 
 static int	set_buffer(char **buf, char *str)
 {

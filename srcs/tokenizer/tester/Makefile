@@ -3,9 +3,11 @@ LIBFT_DIR = ../../../libs/Libft-2.1.1
 LIBFT_HEADER_DIR = $(LIBFT_DIR)/include
 LIBFT = $(LIBFT_DIR)/libft.a
 
-HEADER_DIR = ..
 SOURCE_DIR = ..
 OBJS_DIR = ..
+LOCAL_HEADER_DIR = ..
+LOCAL_HEADER = local_tokenizer.h
+HEADER_DIR = ../../../include
 HEADER = tokenizer.h
 
 CFILES = $(SOURCE_DIR)/fn_helpers.c $(SOURCE_DIR)/fn_token_lists.c \
@@ -13,7 +15,7 @@ CFILES = $(SOURCE_DIR)/fn_helpers.c $(SOURCE_DIR)/fn_token_lists.c \
 		
 OBJS = $(CFILES:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -I $(LIBFT_HEADER_DIR) -I $(HEADER_DIR)
+CFLAGS = -Wall -Wextra -Werror -I $(LIBFT_HEADER_DIR) -I $(HEADER_DIR) -I $(LOCAL_HEADER_DIR)
 
 all : test
 
@@ -23,7 +25,7 @@ $(LIBFT):
 test : $(OBJS) $(LIBFT)
 	cc $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -o test
 
-$(OBJS_DIR)/%.o: ../%.c $(HEADER)
+$(OBJS_DIR)/%.o: ../%.c $(HEADER) $(LOCAL_HEADER)
 	cc $(CFLAGS) -c $< -L$(LIBFT_DIR) -lft -o $@
 
 clean:
