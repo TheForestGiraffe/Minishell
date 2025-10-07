@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 11:54:30 by plima             #+#    #+#             */
-/*   Updated: 2025/10/06 17:10:15 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/10/07 10:01:51 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,24 @@
 #include "libft.h"
 #include "minishell.h"
 
-int main(void)
+int	main(void)
 {
-    char    *line;
+	char	*line;
 
-    setup_signals();
-    while (1)
-    {
-        line = readline("Minishell$ ");
-        if (!line)
-        {
-            ft_putstr_fd("exit\n", 1);
-            break;
-        }
-        if (*line)
-            add_history(line);
-        printf("line: %s\n", line); // TODO: Remove
-    }
-    rl_clear_history();
-    free(line);
-    return (0);
+	setup_signals();
+	while (1)
+	{
+		line = readline("Minishell$ ");
+		if (!line)
+		{
+			ft_putstr_fd("exit\n", 1);
+			break ;
+		}
+		if (*line)
+			add_history(line);
+		printf("line: %s\n", line); // TODO: REMOVE
+	}
+	rl_clear_history();
+	free(line);
+	return (0);
 }
