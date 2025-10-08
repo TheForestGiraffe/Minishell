@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:37:21 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/07 13:15:33 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/10/08 13:12:14 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,17 @@ t_token	*tls_create(char *str)
 	new->next = NULL;
 	new->type = UNSET;
 	return (new);
+}
+
+int	add_buf_to_list(char *buf, t_token **head, t_token_type type)
+{
+	t_token	*current;
+
+	current = tls_create (ft_strdup (buf));
+	if (!current)
+		return (-1);
+	current->type = type;
+	if (tls_add_back (head, current) == -1)
+		return (-1);
+	return (1);
 }

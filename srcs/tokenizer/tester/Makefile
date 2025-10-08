@@ -15,7 +15,7 @@ CFILES = $(SOURCE_DIR)/fn_helpers.c $(SOURCE_DIR)/fn_token_lists.c \
 		
 OBJS = $(CFILES:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -I $(LIBFT_HEADER_DIR) -I $(HEADER_DIR) -I $(LOCAL_HEADER_DIR)
+CFLAGS = -Wall -Wextra -Werror -I $(LIBFT_HEADER_DIR) -I $(HEADER_DIR) -I $(LOCAL_HEADER_DIR) -g
 
 all : test
 

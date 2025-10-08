@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:37:52 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/07 13:15:28 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/10/08 11:30:21 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int	fn_is_space(char c)
 
 int	fn_is_res(char c)
 {
-	if (c == '\'' || c == '\"' || c == '<'
-		|| c == '>' || c == '|')
+	if (c == '<' || c == '>' || c == '|')
 		return (1);
 	else
 		return (0);

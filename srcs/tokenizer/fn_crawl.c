@@ -6,32 +6,29 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:36:45 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/07 13:15:22 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/10/08 13:11:34 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "local_tokenizer.h"
 
-static int	handle_quotes(char *buf, char **p, t_token **head)
+static int	handle_quotes(char **buf, char **p, int pos, t_token_type *type)
 {
-	t_token	*current;
 	char	c;
-	int		i;
 
 	c = **p;
+	if (c == '\'')
+		*type = S_QT;
+	else
+		*type = D_QT;
 	(*p)++;
-	i = 0;
 	while (**p && **p != c)
-		buf[i++] = *(*p)++;
+		(*buf)[pos++] = *(*p)++;
 	if (**p != c)
 		return (-1);
-	buf[i] = '\0';
+	(*buf)[pos] = '\0';
 	(*p)++;
-	current = tls_create (ft_strdup (buf));
-	if (!current)
-		return (-1);
-	figure_type (&current, c);
-	return (tls_add_back (head, current));
+	return (pos);
 }
 
 static int	handle_redirects(char *buf, char **p, t_token **head)
@@ -60,9 +57,7 @@ static int	handle_special(char *buf, char **p, t_token **head)
 	char	*str;
 
 	str = *p;
-	if (*str == '"' || *str == '\'')
-		return (handle_quotes (buf, p, head));
-	else if ((str[0] == '<' && str[1] == '<')
+	if ((str[0] == '<' && str[1] == '<')
 		|| (str[0] == '>' && str[1] == '>'))
 		return (handle_redirects (buf, p, head));
 	else
@@ -80,24 +75,26 @@ static int	handle_special(char *buf, char **p, t_token **head)
 
 static int	handle_word(char *buf, char **str, t_token **head)
 {
-	int		i;
-	t_token	*current;
+	int				i;
+	t_token_type	type;
 
 	i = 0;
+	type = WORD;
 	while (!fn_is_space (**str) && !fn_is_res (**str) && **str)
 	{
+		if (**str == '"' || **str == '\'')
+		{
+			i = handle_quotes (&buf, str, i, &type);
+			if (i == -1)
+				return (-1);
+			continue ;
+		}
 		buf[i] = **str;
 		(*str)++;
 		i ++;
 	}
 	buf[i] = '\0';
-	current = tls_create (ft_strdup (buf));
-	if (!current)
-		return (-1);
-	current->type = WORD;
-	if (tls_add_back (head, current) == -1)
-		return (-1);
-	return (1);
+	return (add_buf_to_list (buf, head, type));
 }
 
 int	crawl(char *buf, char *str, t_token **head)

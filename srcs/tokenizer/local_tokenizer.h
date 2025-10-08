@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:41:33 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/07 13:28:10 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/10/08 13:11:18 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 int		tls_add_back(t_token **lst, t_token *new);
 void	tls_delete_list(t_token **head);
 t_token	*tls_create(char *str);
+int		add_buf_to_list(char *buf, t_token **head, t_token_type type);
 
 // fn_helpers.c
 int		fn_is_space(char c);
