@@ -6,23 +6,17 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 11:54:30 by plima             #+#    #+#             */
-/*   Updated: 2025/10/07 10:01:51 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/10/08 13:16:01 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "libft.h"
 #include "minishell.h"
 
 int	main(void)
 {
 	char	*line;
 
-	setup_signals();
+	register_signals();
 	while (1)
 	{
 		line = readline("Minishell$ ");
@@ -33,7 +27,6 @@ int	main(void)
 		}
 		if (*line)
 			add_history(line);
-		printf("line: %s\n", line); // TODO: REMOVE
 	}
 	rl_clear_history();
 	free(line);
