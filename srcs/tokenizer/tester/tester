@@ -38,7 +38,7 @@ int	main()
 	// char *str = " ";
 	// char *str = "";
 	// char *str = "<<<<       ";
-	char *str = "   <'<<'       ";
+	// char *str = "   <'<<'       ";
 	// char *str = "<		< <<       ";
 	// char *str = "       the \"Weather\"   is | very co<ld but it is not cold>>er 'than this' yester<<day";
 	// char *str = "<  >";
@@ -48,6 +48,9 @@ int	main()
 	// char *str = "echo'a'";
 	// char *str = "         kh\"a abc\"kaka\"     samba\"";
 	// char *str = "''";
+	// char *str = NULL;
+	char *str = "'";
+
 
 
 

@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:36:45 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/08 11:30:25 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/10/08 16:23:51 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ static int	set_buffer(char **buf, char *str)
 	len = ft_strlen (str);
 	*buf = malloc (sizeof (char) * (len + 1));
 	if (!*buf)
+	{
+		perror ("@tokenizer.set_buffer:");
 		return (-1);
+	}
 	return (1);
 }
 
@@ -30,7 +33,10 @@ t_token	*tokenizer(char *str)
 
 	head = NULL;
 	if (!str || !*str)
+	{
+		printf ("@tokenizer: NULL input\n");
 		return (NULL);
+	}
 	if (set_buffer (&buf, str) == -1)
 		return (NULL);
 	if (crawl(buf, str, &head) == -1)
