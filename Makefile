@@ -3,22 +3,23 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: plima <plima@student.42.fr>                +#+  +:+       +#+         #
+#    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2025/10/02 18:48:32 by pecavalc         ###   ########.fr        #
+#    Updated: 2025/10/06 17:12:18 by pecavalc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = Minishell 
+NAME = minishell 
 
 SRCS_DIR = srcs
 OBJS_DIR = objs
 
-SRCS = $(addprefix $(SRCS_DIR)/, ...... put c source files here ....)
+SRCS = $(addprefix $(SRCS_DIR)/, minishell.c \
+								 signals.c)
 OBJS = $(patsubst $(SRCS_DIR)/%.c, $(OBJS_DIR)/%.o, $(SRCS))
 
-HEADER_DIR = include
+HEADER_DIR = srcs
 HEADER = $(HEADER_DIR)/minishell.h
 
 # Directories of all objects above
@@ -38,7 +39,7 @@ $(OBJS_DIRS):
 	mkdir -p $@
 
 $(NAME): $(OBJS) $(LIBFT)
-	cc $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	cc $(CFLAGS) $(OBJS) $(LIBFT) -lreadline -o $(NAME)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADER)
 	cc $(CFLAGS) -c $< -o $@
