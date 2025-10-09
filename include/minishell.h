@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/06 13:30:56 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/10/09 18:17:16 by pecavalc         ###   ########.fr       */
+/*   Created: 2025/10/06 12:31:40 by pecavalc          #+#    #+#             */
+/*   Updated: 2025/10/09 17:15:16 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-int	g_signal = 0;
+# include <stdio.h>
+# include <stdlib.h>
+# include <signal.h>
+# include <unistd.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include "libft.h"
+# include "parser.h"
 
-void	register_signals(void)
-{
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
-}
+// Signals
+void	register_signals(void);
+void	handle_sigint(int signal);
 
-void	handle_sigint(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+#endif

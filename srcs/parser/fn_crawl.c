@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   fn_crawl.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:36:45 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/08 16:18:55 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/10/09 17:18:17 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "local_tokenizer.h"
+#include "local_parser.h"
 
 static int	handle_quotes(char **buf, char **p, int pos, t_token_type *type)
 {

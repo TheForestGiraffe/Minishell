@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:36:45 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/08 16:23:51 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/10/09 17:18:15 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "local_tokenizer.h"
+#include "local_parser.h"
 
 static int	set_buffer(char **buf, char *str)
 {
