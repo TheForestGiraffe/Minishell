@@ -6,18 +6,22 @@
 #    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/10 21:44:39 by pecavalc          #+#    #+#              #
-#    Updated: 2025/10/11 00:46:30 by pecavalc         ###   ########.fr        #
+#    Updated: 2025/10/12 17:39:35 by pecavalc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= test_validate_tokens
+NAME		= test_check_token_sequence
 
 ROOT_DIR 	= ../../../..
 INCLUDE_DIR = $(ROOT_DIR)/include
 PARSER_DIR 	= $(ROOT_DIR)/src/parser/
 
-SRC			= test_validate_tokens.c \
-			  $(PARSER_DIR)/validate_tokens.c
+SRC			= test_check_token_sequence.c \
+			  $(PARSER_DIR)/check_token_sequence.c \
+			  $(PARSER_DIR)/crawl.c \
+			  $(PARSER_DIR)/helpers.c \
+			  $(PARSER_DIR)/token_lists.c \
+			  $(PARSER_DIR)/tokenizer.c
 			  
 OBJ			= $(patsubst %.c, %.o, $(SRC))
 
