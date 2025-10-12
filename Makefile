@@ -6,7 +6,7 @@
 #    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2025/10/11 01:09:19 by pecavalc         ###   ########.fr        #
+#    Updated: 2025/10/12 17:36:43 by pecavalc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ PARSER_SRC_DIR = src/parser
 PARSER_SRC = $(addprefix $(PARSER_SRC_DIR)/, crawl.c \
 											 helpers.c \
 											 token_lists.c \
-											 validate_tokens.c \
+											 check_token_sequence.c \
 											 parse.c \
 											 tokenizer.c)
 
@@ -48,6 +48,11 @@ LIBFT_DIR = libs/Libft-2.1.1
 LIBFT_HEADER_DIR = $(LIBFT_DIR)/include
 LIBFT = $(LIBFT_DIR)/libft.a
 
+# For Mac OS compatibility
+READLINE_PATH := $(shell brew --prefix readline)
+LDFLAGS = -L$(READLINE_PATH)/lib -lreadline -lhistory
+CPPFLAGS = -I$(READLINE_PATH)/include
+
 CFLAGS = -Wall -Wextra -Werror -I$(HEADER_DIR) \
 							   -I$(LOCAL_PARSER_HEADER_DIR) \
 							   -I$(LIBFT_HEADER_DIR)
@@ -60,11 +65,11 @@ $(OBJ_DIRS):
 
 # Compile minishell
 $(NAME): $(OBJ) $(PARSER_OBJ) $(LIBFT)
-	cc $(CFLAGS) $(OBJ) $(PARSER_OBJ) $(LIBFT) -lreadline -o $(NAME)
+	cc $(CFLAGS) $(LDFLAGS) $(OBJ) $(PARSER_OBJ) $(LIBFT) $(LDFLAGS) -o $(NAME)
 
 # Build main obj in src
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER)
-	cc $(CFLAGS) -c $< -o $@
+	cc $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 # Build parser obj 
 $(PARSER_OBJ_DIR)/%.o: $(PARSER_SRC_DIR)/%.c $(PARSER_HEADERS)
