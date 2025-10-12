@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 21:18:49 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/10/12 18:38:56 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/10/12 19:19:46 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 #include "libft.h"
 
 void		test(char *description, char *input, int expected_out, int *res);
-void 		print_result(int ret, char *description);
+void		print_result(int res, char *description);
 static int	is_line_valid(char *line);
 
 int	main(void)
 {
-	int res;
+	int	res;
 
 	res = 1;
-	
-	// Pipes
 	test("Pipe followed by WORD, even if not a command", "cat | outfile", 1, &res);
 	test("Pipe preceeded by S_QT", "cat 'hello world' | echo", 1, &res);
 	test("Pipe preceeded by D_QT", "cat \"hello world\" | echo", 1, &res);
@@ -38,11 +36,9 @@ int	main(void)
 	test("Pipe preceeded by INPUT", "cat < | echo", 0, &res);
 	test("Pipe preceeded by ROUTPUT", "cat >> | echo", 0, &res);
 	test("Pipe preceeded by RINPUT", "cat >> | echo", 0, &res);
-	test("Pipe at the beginning","| echo $VAR", 0, &res);
+	test("Pipe at the beginning", "| echo $VAR", 0, &res);
 	test("Pipe followed by |", "cat | echo || echo", 0, &res);
 	test("Pipe followed by ||", "ls -l ||| wc -l", 0, &res);
-
-	// Redirecions
 	test("Redirection '>' followed by a WORD (target)", "ls -l > outfile", 1, &res);
 	test("Redirection '>>'followed by a WORD (target)", "ls -l < outfile", 1, &res);
 	test("Redirection '<' followed by a WORD (target)", "ls -l < outfile", 1, &res);
@@ -63,53 +59,54 @@ int	main(void)
 	test("Redirection '<' followed by pipe", "ls -l <  |", 0, &res);
 	test("Redirection '>>' followed by pipe", "ls -l >>    |", 0, &res);
 	test("Redirection '<<' followed by pipe", "ls -l <<    |", 0, &res);
-
 	if (res == 1)
 		printf("\ntest_check_token_sequence: [OK]\n");
-	else
+	else if (res == 0)
 		printf("\ntest_check_token_sequence: [NOK]\n");
-		
+	else if (res == -1)
+		printf("\ntest_check_token_sequence: Error\n");
 	return (0);
 }
 
-void test(char *description, char *input, int expected_out, int *res)
+void	test(char *description, char *input, int expected_out, int *res)
 {
-	int	partial_res;
+	int	ret;
 
-	if (is_line_valid(input) == expected_out)
-		partial_res = 1;
-	else
-		partial_res = 0;
 	ft_printf("Test: %s\n", description);
 	ft_printf("Input: %s\n", input);
 	ft_printf("Expected output: %i\n", expected_out);
-	print_result(partial_res, input);
-	if (partial_res == 0)
+	ret = is_line_valid(input);
+	print_result(ret == expected_out, input);
+	if (ret != expected_out)
 		*res = 0;
+	if (ret == -1)
+		*res = -1;
 }
 
 static int	is_line_valid(char *line)
 {
-	t_token *token_lst;
-	
+	t_token	*token_lst;
+
 	token_lst = tokenizer(line);
 	if (!token_lst)
 		return (-1);
-	if (check_token_sequence(token_lst) == -1)
+	if ((check_token_sequence(token_lst) == 0)
+		|| check_token_sequence(token_lst) == -1)
+	{
+		tls_delete_list (&token_lst);
 		return (0);
+	}
 	tls_delete_list (&token_lst);
 	return (1);
 }
 
-void	print_result(int ret, char *description)
+void	print_result(int res, char *description)
 {
-	if (ret == 1)
+	if (res == 1)
 		printf("%-30s [OK]\n", description);
-	else if (ret == 0)
+	else if (res == 0)
 		printf("%-30s [NOK]\n", description);
-	else if (ret == -1)
-		{}
-	else
-		printf("%s:	The test function must return either 0 or 1. The test failed.\n", description);
+	else if (res == -1)
+		printf("%-30s [Function under test returned error (-1)\n", description);
 	printf("\n");
 }
