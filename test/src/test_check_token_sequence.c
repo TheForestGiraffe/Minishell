@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 21:18:49 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/10/12 23:24:04 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/10/13 00:17:45 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(void)
 	int	res;
 
 	res = 1;
-	test("Pipe followed by WORD, even if not a command", "cat | outfile", 1, &res);
+	test("Pipe followed by WORD, even if not cmd", "cat | a", 1, &res);
 	test("Pipe preceeded by S_QT", "cat 'hello world' | echo", 1, &res);
 	test("Pipe preceeded by D_QT", "cat \"hello world\" | echo", 1, &res);
 	test("Pipe followed by S_QT", "ls | 'echo' $VAR", 1, &res);
@@ -39,18 +39,18 @@ int	main(void)
 	test("Pipe at the beginning", "| echo $VAR", 0, &res);
 	test("Pipe followed by |", "cat | echo || echo", 0, &res);
 	test("Pipe followed by ||", "ls -l ||| wc -l", 0, &res);
-	test("Redirection '>' followed by a WORD (target)", "ls -l > outfile", 1, &res);
-	test("Redirection '>>'followed by a WORD (target)", "ls -l < outfile", 1, &res);
-	test("Redirection '<' followed by a WORD (target)", "ls -l < outfile", 1, &res);
-	test("Redirection '<<'followed by a WORD (target)", "ls -l < outfile", 1, &res);
-	test("Redirection '>' followed by a S_QT (target)", "ls -l > 'outfile'", 1, &res);
-	test("Redirection '>' followed by a D_QT (target)", "ls -l > \"outfile\" ", 1, &res);
-	test("Redirection '<' followed by a S_QT (target)", "ls -l < 'outfile'", 1, &res);
-	test("Redirection '<' followed by a D_QT (target)", "ls -l < \"outfile\" ", 1, &res);
-	test("Redirection '>>' followed by a S_QT (target)", "ls -l >> 'outfile'", 1, &res);
-	test("Redirection '>>' followed by a D_QT (target)", "ls -l >> \"outfile\" ", 1, &res);
-	test("Redirection '<<' followed by a S_QT (target)", "ls -l << 'outfile'", 1, &res);
-	test("Redirection '<<' followed by a D_QT (target)", "ls -l << \"outfile\" ", 1, &res);
+	test("Redirection '>' followed by a WORD ", "ls -l > outfile", 1, &res);
+	test("Redirection '>>'followed by a WORD ", "ls -l < outfile", 1, &res);
+	test("Redirection '<' followed by a WORD ", "ls -l < outfile", 1, &res);
+	test("Redirection '<<'followed by a WORD ", "ls -l < outfile", 1, &res);
+	test("Redirection '>' followed by a S_QT ", "ls -l > 'outfile'", 1, &res);
+	test("Redirection '>' followed by a D_QT ", "ls -l > \"out\" ", 1, &res);
+	test("Redirection '<' followed by a S_QT ", "ls -l < 'out'", 1, &res);
+	test("Redirection '<' followed by a D_QT ", "ls -l < \"out\" ", 1, &res);
+	test("Redirection '>>' followed by a S_QT ", "ls -l >> 'out'", 1, &res);
+	test("Redirection '>>' followed by a D_QT ", "ls -l >> \"out\" ", 1, &res);
+	test("Redirection '<<' followed by a S_QT ", "ls -l << 'out'", 1, &res);
+	test("Redirection '<<' followed by a D_QT ", "ls -l << \"out\" ", 1, &res);
 	test("Redirection '>' at the end", "ls -l >", 0, &res);
 	test("Redirection '<' at the end", "ls -l <", 0, &res);
 	test("Redirection '>>'at the end", "ls -l >>", 0, &res);
@@ -72,8 +72,6 @@ void	test(char *description, char *input, int expected_out, int *res)
 {
 	int	ret;
 
-	//ft_printf("Input: %s\n", input);
-	//ft_printf("Expected output: %i\n", expected_out);
 	ret = is_line_valid(input);
 	print_result(ret == expected_out, description);
 	if (ret != expected_out)
