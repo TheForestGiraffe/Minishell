@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 21:18:49 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/10/12 19:19:46 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/10/12 23:24:04 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ int	main(void)
 	test("Redirection '>>' followed by pipe", "ls -l >>    |", 0, &res);
 	test("Redirection '<<' followed by pipe", "ls -l <<    |", 0, &res);
 	if (res == 1)
-		printf("\ntest_check_token_sequence: [OK]\n");
+		printf("\ntest_check_token_sequence: [OK]\n\n");
 	else if (res == 0)
-		printf("\ntest_check_token_sequence: [NOK]\n");
+		printf("\ntest_check_token_sequence: [NOK]\n\n");
 	else if (res == -1)
-		printf("\ntest_check_token_sequence: Error\n");
+		printf("\ntest_check_token_sequence: Error\n\n");
 	return (0);
 }
 
@@ -72,11 +72,10 @@ void	test(char *description, char *input, int expected_out, int *res)
 {
 	int	ret;
 
-	ft_printf("Test: %s\n", description);
-	ft_printf("Input: %s\n", input);
-	ft_printf("Expected output: %i\n", expected_out);
+	//ft_printf("Input: %s\n", input);
+	//ft_printf("Expected output: %i\n", expected_out);
 	ret = is_line_valid(input);
-	print_result(ret == expected_out, input);
+	print_result(ret == expected_out, description);
 	if (ret != expected_out)
 		*res = 0;
 	if (ret == -1)
@@ -103,10 +102,9 @@ static int	is_line_valid(char *line)
 void	print_result(int res, char *description)
 {
 	if (res == 1)
-		printf("%-30s [OK]\n", description);
+		printf("%-50s [OK]\n", description);
 	else if (res == 0)
-		printf("%-30s [NOK]\n", description);
+		printf("%-50s [NOK]\n", description);
 	else if (res == -1)
-		printf("%-30s [Function under test returned error (-1)\n", description);
-	printf("\n");
+		printf("%-50s [Function under test returned error (-1)\n", description);
 }

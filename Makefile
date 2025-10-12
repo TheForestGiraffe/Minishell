@@ -6,7 +6,7 @@
 #    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2025/10/12 17:36:43 by pecavalc         ###   ########.fr        #
+#    Updated: 2025/10/12 23:53:47 by pecavalc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,10 @@ NAME = minishell
 SRC_DIR = src
 OBJ_DIR = obj
 
-SRC = $(addprefix $(SRC_DIR)/, minishell.c \
-							   signals.c)
+SRC = $(addprefix $(SRC_DIR)/, signals.c)
+SRC_MAIN = $(addprefix $(SRC_DIR)/,minishell.c)
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
+OBJ_MAIN = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_MAIN))
 
 HEADER_DIR = include
 HEADER = $(HEADER_DIR)/minishell.h
@@ -64,8 +65,9 @@ $(OBJ_DIRS):
 	mkdir -p $@
 
 # Compile minishell
-$(NAME): $(OBJ) $(PARSER_OBJ) $(LIBFT)
-	cc $(CFLAGS) $(LDFLAGS) $(OBJ) $(PARSER_OBJ) $(LIBFT) $(LDFLAGS) -o $(NAME)
+$(NAME): $(OBJ) $(PARSER_OBJ) $(LIBFT) $(OBJ_MAIN)
+	cc $(CFLAGS) $(LDFLAGS) $(OBJ) $(PARSER_OBJ) $(LIBFT) $(OBJ_MAIN) \
+	   $(LDFLAGS) -o $(NAME)
 
 # Build main obj in src
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER)
@@ -79,15 +81,74 @@ $(PARSER_OBJ_DIR)/%.o: $(PARSER_SRC_DIR)/%.c $(PARSER_HEADERS)
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
+# --------------------------------------------------------------------------- #
+# 								UNIT TESTS									  #
+# --------------------------------------------------------------------------- #
+
+TEST_DIR = test
+TEST_SRC_DIR = $(TEST_DIR)/src
+TEST_OBJ_DIR = $(TEST_DIR)/obj
+
+# Create obj folder - ensure this is a dependency in the targets below
+$(TEST_OBJ_DIR):
+	mkdir -p $@
+
+# NORMINETTE
+test_norm:
+	norminette -R CheckForbiddenHeaderSource \
+	$(SRC_DIR) $(PARSER_SRC_DIR) $(HEADER_DIR) $(LOCAL_PARSER_HEADER_DIR)
+
+# PARSER TESTS
+
+# 1: test_check_token_sequence
+TEST_1_NAME	= test_check_token_sequence
+TEST_1_SRC 	= $(addprefix $(TEST_SRC_DIR)/, test_check_token_sequence.c)
+TEST_1_OBJ 	= $(patsubst $(TEST_SRC_DIR)/%.c, $(TEST_OBJ_DIR)/%.o, \
+			  $(TEST_1_SRC))
+
+# Compile and run test 1
+$(TEST_1_NAME): $(OBJ_DIRS) $(OBJ) $(PARSER_OBJ) $(NAME) $(LIBFT) \
+				$(TEST_OBJ_DIR) $(TEST_1_OBJ)
+	@cc $(CFLAGS) $(LDFLAGS) $(OBJ) $(PARSER_OBJ) $(LIBFT) $(TEST_1_OBJ) \
+	   $(LDFLAGS) -o $(TEST_1_NAME)
+	./$(TEST_1_NAME)
+
+# 2: test_tokenizer
+TEST_2_NAME = test_tokenizer
+TEST_2_SRC = $(addprefix $(TEST_SRC_DIR)/, test_tokenizer.c)
+TEST_2_OBJ = $(patsubst $(TEST_SRC_DIR)/%.c, $(TEST_OBJ_DIR)/%.o, \
+			 $(TEST_2_SRC))
+
+# Compile and run test 2
+$(TEST_2_NAME): $(OBJ_DIRS) $(OBJ) $(PARSER_OBJ) $(NAME) $(LIBFT) \
+				$(TEST_OBJ_DIR) $(TEST_2_OBJ)
+	@cc $(CFLAGS) $(LDFLAGS) $(OBJ) $(PARSER_OBJ) $(LIBFT) $(TEST_2_OBJ) \
+	   $(LDFLAGS) -o $(TEST_2_NAME)
+	./$(TEST_2_NAME)
+
+# Compile test objects
+$(TEST_OBJ_DIR)/%.o: $(TEST_SRC_DIR)/%.c
+	cc $(CFLAGS) -c $< -o $@
+
+test: 		$(TEST_1_NAME) $(TEST_2_NAME) test_norm
+test_1: 	$(TEST_1_NAME)
+test_2:		$(TEST_2_NAME)
+
+# --------------------------------------------------------------------------- #
+# 								CLEAN UP									  #
+# --------------------------------------------------------------------------- #
+
 clean:
-	rm -f $(OBJ)
 	rm -rf $(OBJ_DIR)
+	rm -rf $(TEST_OBJ_DIR)
 	$(MAKE) clean -C $(LIBFT_DIR)
 
 fclean: clean
 	rm -f $(NAME)
+	rm -f $(TEST_1_NAME)
+	rm -f $(TEST_2_NAME)
 	$(MAKE) fclean -C $(LIBFT_DIR)
 
 re: fclean all
 
-.PHONY: all re clean fclean
+.PHONY: all test $(TEST_1_NAME) $(TEST_2_NAME) re clean fclean
