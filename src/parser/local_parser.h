@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:41:33 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/12 17:40:35 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/10/15 14:24:48 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@ void	figure_type(t_token **current, char c);
 // fn_crawl.c
 int		crawl(char *buf, char *str, t_token **head);
 
+// fn_cmd_list.c
+t_cmd	*cmd_lst_create(void);
+int		cmd_lst_add_back(t_cmd **head, t_cmd *new);
+int		cmd_lst_delete_list(t_cmd **head);
+
 int		check_token_sequence(t_token *tokens);
+t_cmd	*build_cmd_lst(t_token *token_lst);
 
 #endif
