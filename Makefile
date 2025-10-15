@@ -6,7 +6,7 @@
 #    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2025/10/12 23:53:47 by pecavalc         ###   ########.fr        #
+#    Updated: 2025/10/15 14:25:57 by pecavalc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = minishell
 SRC_DIR = src
 OBJ_DIR = obj
 
-SRC = $(addprefix $(SRC_DIR)/, signals.c)
+SRC = $(addprefix $(SRC_DIR)/, fn_signals.c)
 SRC_MAIN = $(addprefix $(SRC_DIR)/,minishell.c)
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 OBJ_MAIN = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_MAIN))
@@ -25,12 +25,14 @@ HEADER = $(HEADER_DIR)/minishell.h
 
 # Parser
 PARSER_SRC_DIR = src/parser
-PARSER_SRC = $(addprefix $(PARSER_SRC_DIR)/, crawl.c \
-											 helpers.c \
-											 token_lists.c \
-											 check_token_sequence.c \
-											 parse.c \
-											 tokenizer.c)
+PARSER_SRC = $(addprefix $(PARSER_SRC_DIR)/, fn_build_cmd_lst.c \
+											 fn_check_token_sequence.c \
+											 fn_cmd_list.c \
+											 fn_crawl.c \
+											 fn_helpers.c \
+											 fn_token_lists.c \
+											 fn_tokenizer.c \
+											 parse.c)
 
 PARSER_OBJ_DIR = obj/parser
 PARSER_OBJ = $(patsubst $(PARSER_SRC_DIR)/%.c, \
