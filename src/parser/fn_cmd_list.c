@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/10/15 15:14:38 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/10/16 11:25:14 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_cmd	*cmd_lst_create(void)
 	new->infile = NULL;
 	new->outfile = NULL;
 	new->append = false;
+	new->next = NULL;
 	return (new);
 }
 int cmd_lst_add_back(t_cmd **head, t_cmd *new)
@@ -42,10 +43,11 @@ int cmd_lst_add_back(t_cmd **head, t_cmd *new)
 		*head = new;
 		return (1);
 	}
-	cur = (*head);
+	cur = *head;
 	while (cur->next)
 		cur = cur->next;
 	cur->next = new;
+	new->next = NULL;
 	return (1);
 }
 
@@ -55,7 +57,7 @@ int	cmd_lst_delete_list(t_cmd **head)
 	t_cmd	*cur;
 	t_cmd 	*next;
 
-	if (!head)
+	if (!head || !*head)
 	{
 		ft_putstr_fd("@cmd_lst_delete_list: NULL input", 2);
 		return (-1);
@@ -64,10 +66,7 @@ int	cmd_lst_delete_list(t_cmd **head)
 	while (cur)
 	{
 		next = cur->next;
-		i = 0;
-		while (cur->argv[i])
-			free(cur->argv[i]);
-		free(cur->argv);
+		free_argv(cur);
 		free(cur->infile);
 		free(cur->outfile);
 		free(cur);
@@ -75,4 +74,16 @@ int	cmd_lst_delete_list(t_cmd **head)
 	}
 	*head = NULL;
 	return (1);
+}
+void	free_argv(t_cmd *cur)
+{
+	int i;
+	
+	i = 0;
+	if (cur->argv)
+	{
+		while (cur->argv[i])
+			free(cur->argv[i++]);
+		free(cur->argv);
+	}
 }
