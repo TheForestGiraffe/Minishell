@@ -24,9 +24,10 @@ int main(void)
     int res = 1;
 
     char *pipeline1_cmd1[] = {"ls", "-l", NULL};
-    char *pipeline1_cmd2[] = {"grep", "main", NULL};
-    char **pipeline1[] = {pipeline1_cmd1, pipeline1_cmd2, NULL};
-    test("Pipeline: ls -l | grep main", "ls -l | grep main", pipeline1, &res);
+	char *pipeline1_cmd2[] = {"grep", "main", NULL};
+	char *pipeline1_cmd3[] = {"wc", "-l", NULL};
+	char **pipeline1[] = {pipeline1_cmd1, pipeline1_cmd2, pipeline1_cmd3, NULL};
+    test("Pipeline: ls -l | grep main | \"wc\" -l", "ls -l | grep main | \"wc\" -l", pipeline1, &res);
 
     char *pipeline2_cmd1[] = {"echo", "hello", "world", NULL};
     char **pipeline2[] = {pipeline2_cmd1, NULL};
