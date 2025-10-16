@@ -6,7 +6,7 @@
 #    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2025/10/16 13:21:39 by pecavalc         ###   ########.fr        #
+#    Updated: 2025/10/16 15:22:51 by pecavalc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ HEADER = $(HEADER_DIR)/minishell.h
 
 # Parser
 PARSER_SRC_DIR = src/parser
-PARSER_SRC = $(addprefix $(PARSER_SRC_DIR)/, fn_add_word.c \
+PARSER_SRC = $(addprefix $(PARSER_SRC_DIR)/, fn_add_argv.c \
 											 fn_build_cmd_lst.c \
 											 fn_check_token_sequence.c \
 											 fn_cmd_list.c \

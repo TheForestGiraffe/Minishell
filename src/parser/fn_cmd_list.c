@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/10/16 13:05:02 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/10/16 15:58:23 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ t_cmd	*cmd_lst_create(void)
 		perror("@cmd_lst_create:");
 		return (NULL);
 	}
-	new->argv = NULL;
+	new->argv_lst = NULL;
 	new->infile = NULL;
+	new->is_infile_heredoc = false;
 	new->outfile = NULL;
 	new->append = false;
 	new->next = NULL;
@@ -65,7 +66,7 @@ int	cmd_lst_delete_list(t_cmd **head)
 	while (cur)
 	{
 		next = cur->next;
-		free_argv(cur);
+		tls_delete_list(&(*head)->argv_lst);
 		free(cur->infile);
 		free(cur->outfile);
 		free(cur);
@@ -73,16 +74,4 @@ int	cmd_lst_delete_list(t_cmd **head)
 	}
 	*head = NULL;
 	return (1);
-}
-void	free_argv(t_cmd *cur)
-{
-	int i;
-	
-	i = 0;
-	if (cur->argv)
-	{
-		while (cur->argv[i])
-			free(cur->argv[i++]);
-		free(cur->argv);
-	}
 }

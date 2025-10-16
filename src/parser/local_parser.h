@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:41:33 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/16 13:04:44 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/10/16 15:57:12 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,6 @@
 # include <stdlib.h>
 # include "libft.h"
 # include "parser.h"
-
-typedef enum e_type
-{
-	UNSET = -1,
-	WORD,
-	PIPE,
-	INPUT,
-	OUTPUT,
-	RINPUT,
-	ROUTPUT,
-	S_QT,
-	D_QT
-}	t_token_type;
-
-typedef struct s_token
-{
-	char			*content;
-	struct s_token	*next;
-	t_token_type	type;
-}	t_token;
 
 // fn_tokenizer.c
 t_token	*tokenizer(char *str);
@@ -59,10 +39,9 @@ int		crawl(char *buf, char *str, t_token **head);
 t_cmd	*cmd_lst_create(void);
 int		cmd_lst_add_back(t_cmd **head, t_cmd *new);
 int		cmd_lst_delete_list(t_cmd **head);
-void	free_argv(t_cmd *cur);
 
 int		check_token_sequence(t_token *tokens);
 t_cmd	*build_cmd_lst(t_token *token_lst);
-int		add_word(char *word, t_cmd *cur_cmd);
+int		add_argv(t_token *cur_token, t_cmd *cur_cmd);
 
 #endif

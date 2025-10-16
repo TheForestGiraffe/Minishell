@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/10/16 13:37:34 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/10/16 15:54:40 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,31 @@
 
 t_cmd	*build_cmd_lst(t_token *token_lst)
 {
-	t_cmd *cmd_lst;
-	t_cmd *cur_cmd;
+	t_cmd 	*cmd_lst;
+	t_cmd 	*cur_cmd;
+	t_token *cur_token;
 
 	if (!token_lst)
 		return (NULL);
+	cur_token = token_lst;
 	cmd_lst = NULL;
 	cur_cmd = cmd_lst_create();
 	if (!cur_cmd)
 		return (NULL);
 	if (cmd_lst_add_back(&cmd_lst, cur_cmd) == -1)
 		return (NULL);
-	while (token_lst)
+	while (cur_token)
 	{
-		if (token_lst->type == WORD)
+		if ((cur_token->type == WORD) || (cur_token->type == S_QT) || 
+				(cur_token->type == D_QT))
 		{
-			if (add_word(token_lst->content, cur_cmd) == -1)
+			if (add_argv(cur_token, cur_cmd) == -1)
 			{
 				cmd_lst_delete_list(&cmd_lst);
 				return (NULL);
 			}
 		}
-		else if (token_lst->type == PIPE)
+		else if (cur_token->type == PIPE)
 		{
 			cur_cmd = cmd_lst_create();
 			if (!cur_cmd || (cmd_lst_add_back(&cmd_lst, cur_cmd) == -1))
@@ -44,10 +47,11 @@ t_cmd	*build_cmd_lst(t_token *token_lst)
 				return (NULL);
 			}
 		}
-
-		// To be continued here.
-
-		token_lst = token_lst->next;
+		else if (cur_token->type == INPUT)
+		{	
+			// TODO
+		}
+		cur_token = cur_token->next;
 	}
 	return (cmd_lst);
 }

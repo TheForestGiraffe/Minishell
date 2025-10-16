@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:37:21 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/09 17:18:16 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/10/16 15:50:59 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	tls_add_back(t_token **lst, t_token *new)
 	while (cur->next)
 		cur = cur->next;
 	cur->next = new;
+	new->next = NULL;
 	return (1);
 }
 
