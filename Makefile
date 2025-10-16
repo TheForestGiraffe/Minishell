@@ -6,7 +6,7 @@
 #    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2025/10/16 15:22:51 by pecavalc         ###   ########.fr        #
+#    Updated: 2025/10/16 16:08:21 by pecavalc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,7 +99,7 @@ $(TEST_OBJ_DIR):
 # NORMINETTE
 test_norm:
 	norminette -R CheckForbiddenHeaderSource \
-	$(SRC_DIR) $(PARSER_SRC_DIR) $(HEADER_DIR) $(LOCAL_PARSER_HEADER_DIR)
+	$(SRC_DIR) $(HEADER_DIR)
 
 # PARSER TESTS
 
