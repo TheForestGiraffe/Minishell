@@ -6,61 +6,96 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/10/17 14:03:31 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:50:00 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "local_parser.h"
 
-static int	handle_redirection(t_cmd *cur_cmd, t_cmd *cur_token);
+static int	convert_token(t_token *token, t_cmd **cmd, t_cmd **cmd_lst);
+static int	handle_redirection(t_token *cmd, t_cmd *token);
+static int	handle_heredoc(t_token *token, t_cmd *cmd);
 
 t_cmd	*build_cmd_lst(t_token *token_lst)
 {
 	t_cmd	*cmd_lst;
-	t_cmd	*cur_cmd;
-	t_token	*cur_token;
+	t_cmd	*cmd;
+	t_token	*token;
 
 	if (!token_lst)
 		return (NULL);
-	cur_token = token_lst;
+	token = token_lst;
 	cmd_lst = NULL;
-	cur_cmd = cmd_lst_create();
-	if (!cur_cmd)
+	cmd = cmd_lst_create();
+	if (!cmd)
 		return (NULL);
-	if (cmd_lst_add_back(&cmd_lst, cur_cmd) == -1)
+	if (cmd_lst_add_back(&cmd_lst, cmd) == -1)
 		return (NULL);
-	while (cur_token)
+	while (token)
 	{
-		if ((cur_token->type == WORD) || (cur_token->type == S_QT) || 
-			(cur_token->type == D_QT))
+		if (convert_token(token, &cmd, &cmd_lst) == -1)
 		{
-			if (add_argv(cur_token, cur_cmd) == -1)
-			{
-				cmd_lst_delete_list(&cmd_lst);
-				return (NULL);
-			}
+			cmd_lst_delete_list(&cmd_lst);
+			return (NULL);
 		}
-		else if (cur_token->type == PIPE)
-		{
-			cur_cmd = cmd_lst_create();
-			if (!cur_cmd || (cmd_lst_add_back(&cmd_lst, cur_cmd) == -1))
-			{
-				cmd_lst_delete_list(&cmd_lst);
-				return (NULL);
-			}
-		}
-		else if ((cur_token->type == INPUT) || (cur_token->type == OUTPUT)
-			|| (cur_token->type == RINPUT) || (cur_token->type == ROUTPUT))
-		{
-			handle_redirection(cur_cmd, cur_token);
-		}
-		cur_token = cur_token->next;
+		token = token->next;
 	}
 	return (cmd_lst);
 }
 
-int	handle_redirection(t_cmd *cur_cmd, t_cmd *cur_token)
+static int	convert_token(t_token *token, t_cmd **cmd, t_cmd **cmd_lst)
 {
-	if (cur_token->)
+	if ((token->type == WORD) || (token->type == S_QT) || (token->type == D_QT))
+	{
+		if (add_argv(token, *cmd) == -1)
+			return (-1);
+	}
+	else if (token->type == PIPE)
+	{
+		*cmd = cmd_lst_create();
+		if (!*cmd || (cmd_lst_add_back(cmd_lst, *cmd) == -1))
+			return (-1);
+	}
+	else if ((token->type == INPUT) || (token->type == OUTPUT)
+		|| (token->type == RINPUT) || (token->type == ROUTPUT))
+	{
+		if (handle_redirection(token, *cmd) == -1)
+			return (-1);
+	}
+	return (1);
+}
+
+int	handle_redirection(t_token *token, t_cmd *cmd)
+{
+	if (token->type == INPUT)
+	{
+		cmd->infile = ft_strdup(token->content);
+		if (!cmd->infile)
+			return (-1);
+	}
+	else if (token->type == OUTPUT || token->type == ROUTPUT)
+	{
+		cmd->outfile = ft_strdup(token->content);
+		if (!cmd->outfile)
+			return (-1);
+		if (token->type == ROUTPUT)
+			cmd->append = true;
+	}
+	else if (token->type == RINPUT)
+	{
+		if (handle_heredoc(token, cmd) == -1)
+			return (-1);
+	}
+	return (1);
+}
+
+static int	handle_heredoc(t_token *token, t_cmd *cmd)
+{
+	if (!token || !cmd || !token->content)
+		return (-1);
+	cmd->is_infile_heredoc = true;
+	cmd->infile = ft_strdup(token->content);
+	if (!cmd->infile)
+		return (-1);
 	return (1);
 }

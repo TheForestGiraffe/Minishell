@@ -6,7 +6,7 @@
 #    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2025/10/16 16:12:16 by pecavalc         ###   ########.fr        #
+#    Updated: 2025/10/17 16:31:58 by pecavalc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,9 +57,9 @@ READLINE_PATH := $(shell brew --prefix readline)
 LDFLAGS = -L$(READLINE_PATH)/lib -lreadline -lhistory
 CPPFLAGS = -I$(READLINE_PATH)/include
 
-CFLAGS = -Wall -Wextra -Werror -I$(HEADER_DIR) \
-							   -I$(LOCAL_PARSER_HEADER_DIR) \
-							   -I$(LIBFT_HEADER_DIR)
+CFLAGS = -g -Wall -Wextra -Werror -I$(HEADER_DIR) \
+								  -I$(LOCAL_PARSER_HEADER_DIR) \
+							   	  -I$(LIBFT_HEADER_DIR)
 
 all: $(OBJ_DIRS) $(NAME)
 
@@ -136,10 +136,10 @@ TEST_3_OBJ = $(patsubst $(TEST_SRC_DIR)/%.c, $(TEST_OBJ_DIR)/%.o, \
 			 $(TEST_3_SRC))
 
 # Compile and run test 3
-$(TEST_3_NAME): $(OBJ_DIRS) $(OBJ) $(PARSER_OBJ) $(NAME) $(LIBFT) \
+$(TEST_3_NAME): $(LIBFT) $(OBJ_DIRS) $(OBJ) $(PARSER_OBJ) $(NAME) \
 				$(TEST_OBJ_DIR) $(TEST_3_OBJ)
-	@cc $(CFLAGS) $(LDFLAGS) $(OBJ) $(PARSER_OBJ) $(LIBFT) $(TEST_3_OBJ) \
-	   $(LDFLAGS) -o $(TEST_3_NAME)
+	@cc $(CFLAGS) $(LDFLAGS) $(OBJ) $(PARSER_OBJ) $(TEST_3_OBJ) \
+		$(LIBFT) -o $(TEST_3_NAME)
 	./$(TEST_3_NAME)
 
 # Compile test objects
