@@ -6,7 +6,7 @@
 #    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2025/10/17 16:31:58 by pecavalc         ###   ########.fr        #
+#    Updated: 2025/10/17 17:09:23 by pecavalc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,9 @@ PARSER_SRC = $(addprefix $(PARSER_SRC_DIR)/, fn_add_argv.c \
 											 fn_check_token_sequence.c \
 											 fn_cmd_list.c \
 											 fn_crawl.c \
+											 fn_expand_tokens_utils.c \
+											 fn_expand_tokens.c \
+											 fn_general_utils.c \
 											 fn_helpers.c \
 											 fn_token_lists.c \
 											 fn_tokenizer.c \

@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:41:33 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/16 15:57:12 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/10/17 17:08:21 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,15 @@ void	figure_type(t_token **current, char c);
 
 // fn_crawl.c
 int		crawl(char *buf, char *str, t_token **head);
+
+// fn_expand_vars_utils.c
+int		msg_int(char *str, int val);
+void	free_3(void *a, void *b, void *c);
+char	*ft_strdup_mod(const char *s1);
+char	*search_env(char *str, char **envp);
+int		replace_var(char **str, int i, int var_len, char *expanded_var);
+void	*perror_null(char *str);
+int		cal_var_len(char *str, int i);
 
 // fn_cmd_list.c
 t_cmd	*cmd_lst_create(void);
