@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_build_cmd_lst.c                           :+:      :+:    :+:   */
+/*   test_build_cmd_lst.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 13:10:00 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/10/16 16:30:00 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/03 11:03:41 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ int main(void)
 {
     int res = 1;
 
+    // Pipeline tests
     char *pipeline1_cmd1[] = {"ls", "-l", NULL};
-	char *pipeline1_cmd2[] = {"grep", "main", NULL};
-	char *pipeline1_cmd3[] = {"wc", "-l", NULL};
-	char **pipeline1[] = {pipeline1_cmd1, pipeline1_cmd2, pipeline1_cmd3, NULL};
-    test("Pipeline: ls -l | grep main | \"wc\" -l", "ls -l | grep main | \"wc\" -l", pipeline1, &res);
+    char *pipeline1_cmd2[] = {"grep", "main", NULL};
+    char *pipeline1_cmd3[] = {"wc", "-l", NULL};
+    char **pipeline1[] = {pipeline1_cmd1, pipeline1_cmd2, pipeline1_cmd3, NULL};
+    test("Pipeline: ls -l | grep main | wc -l", "ls -l | grep main | wc -l", pipeline1, &res);
 
     char *pipeline2_cmd1[] = {"echo", "hello", "world", NULL};
     char **pipeline2[] = {pipeline2_cmd1, NULL};
@@ -38,10 +39,27 @@ int main(void)
     char **pipeline3[] = {pipeline3_cmd1, pipeline3_cmd2, NULL};
     test("Pipeline with simple pipe: cat | wc -l", "cat | wc -l", pipeline3, &res);
 
+    // Redirection tests (argv only, redirection not verified yet)
+    char *redir1_cmd[] = {"echo", "hello", NULL};
+    char **redir1[] = {redir1_cmd, NULL};
+    test("Simple output redirection: echo hello > out.txt", "echo hello > out.txt", redir1, &res);
+
+    char *redir2_cmd[] = {"cat", NULL};
+    char **redir2[] = {redir2_cmd, NULL};
+    test("Multiple output redirections: cat > file1.txt >> file2.txt", "cat > file1.txt >> file2.txt", redir2, &res);
+
+    char *redir3_cmd[] = {"cat", NULL};
+    char **redir3[] = {redir3_cmd, NULL};
+    test("Input and output redirection: cat < input.txt > file.txt", "cat < input.txt > file.txt", redir3, &res);
+
+    char *redir4_cmd[] = {"cat", NULL};
+    char **redir4[] = {redir4_cmd, NULL};
+    test("Heredoc input: cat << EOF", "cat << EOF", redir4, &res);
+
     if (res == 1)
-        printf("\ntest_cmd_list_pipeline: [OK]\n\n");
+        printf("\ntest_build_cmd_lst: [OK]\n\n");
     else
-        printf("\ntest_cmd_list_pipeline: [NOK]\n\n");
+        printf("\ntest_build_cmd_lst: [NOK]\n\n");
 
     return 0;
 }
