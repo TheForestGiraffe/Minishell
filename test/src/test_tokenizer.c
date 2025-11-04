@@ -39,21 +39,16 @@ int	main()
 	// char *str = "<<<<       ";
 	// char *str = "   <'<<'       ";
 	// char *str = "<		< <<       ";
-	// char *str = "       the \"Weather\"   is | very co<ld but it is not cold>>er 'than this' yester<<day";
+	//char *str = "       the \"Weather\"   is | very co<ld but it is not cold>>er 'than this' yester<<day";
 	// char *str = "<  >";
 	// char *str = "this is a 'tom|ato' but \"falafel is better\" than nothi|ng at all";
 	// char *str = "echo 'hi'\"there\"";
-	// char *str = "echo \"hello 'nested quotes\"";
+	char *str = "echo \"hello 'nested quotes\"";
 	// char *str = "echo'a'";
 	// char *str = "         kh\"a abc\"kaka\"     samba\"";
 	// char *str = "''";
 	// char *str = NULL;
-	char *str = "'";
-
-
-
-
-
+	// char *str = "'";
 
 	ls_token = tokenizer(str);
 	if (!ls_token)
@@ -66,5 +61,3 @@ int	main()
 	tls_delete_list (&ls_token);
 
 }
-
-// what error to return if string is empty?

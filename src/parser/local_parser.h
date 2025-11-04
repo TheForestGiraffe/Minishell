@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:41:33 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/09 18:14:54 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/03 11:53:59 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 # include <stdlib.h>
 # include "libft.h"
 # include "parser.h"
+# include <fcntl.h>
+# include <unistd.h>
+
+// fn_tokenizer.c
+t_token	*tokenizer(char *str);
 
 // fn_tocken_lists.c
 int		tls_add_back(t_token **lst, t_token *new);
@@ -31,5 +36,26 @@ void	figure_type(t_token **current, char c);
 
 // fn_crawl.c
 int		crawl(char *buf, char *str, t_token **head);
+
+// fn_expand_tokens_utils.c
+int		msg_int(char *str, int val);
+void	free_3(void *a, void *b, void *c);
+char	*ft_strdup_mod(const char *s1);
+char	*search_env(char *str, char **envp);
+int		replace_var(char **str, int i, int var_len, char *expanded_var);
+void	*perror_null(char *str);
+int		cal_var_len(char *str, int i);
+
+// fn_expand_tokens.c
+int		expand_tokens(t_token *token_lst, char **envp);
+
+// fn_cmd_list.c
+t_cmd	*cmd_lst_create(void);
+int		cmd_lst_add_back(t_cmd **head, t_cmd *new);
+int		cmd_lst_delete_list(t_cmd **head);
+
+int		check_token_sequence(t_token *tokens);
+t_cmd	*build_cmd_lst(t_token *token_lst);
+int		add_argv(t_token *cur_token, t_cmd *cur_cmd);
 
 #endif
