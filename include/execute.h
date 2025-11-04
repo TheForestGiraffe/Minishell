@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/06 12:31:40 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/10/09 17:15:16 by pecavalc         ###   ########.fr       */
+/*   Created: 2025/10/05 19:41:33 by kalhanaw          #+#    #+#             */
+/*   Updated: 2025/11/04 18:28:08 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef EXECUTE_H
+# define EXECUTE_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <signal.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "libft.h"
-# include "parser.h"
-# include "execute.h"
+# include <stdbool.h>
+# include "local_execute.h"
 
-// Signals
-void	register_signals(void);
-void	handle_sigint(int signal);
+int	execute(t_cmd *cmd_lst, char **envp);
+int	cmd_lst_count(t_cmd *cmd_lst);
 
 #endif

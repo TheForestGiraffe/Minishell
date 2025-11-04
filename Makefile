@@ -6,7 +6,7 @@
 #    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2025/10/17 17:09:23 by pecavalc         ###   ########.fr        #
+#    Updated: 2025/11/04 18:09:52 by pecavalc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,8 +47,42 @@ LOCAL_PARSER_HEADER_DIR = $(PARSER_SRC_DIR)
 PARSER_HEADERS = $(PUB_PARSER_HEADER_DIR)/parser.h \
 				 $(LOCAL_PARSER_HEADER_DIR)/local_parser.h
 
+# Execute
+EXECUTE_SRC_DIR = src/execute
+EXECUTE_SRC = $(addprefix $(EXECUTE_SRC_DIR)/,execute.c \
+												fn_assign_input_output_utils.c \
+												fn_assign_input_output.c \
+												fn_get_full_path.c \
+												fn_run_cmd.c \
+												fn_utils.c)
+
+EXECUTE_OBJ_DIR = obj/execute
+EXECUTE_OBJ = $(patsubst $(EXECUTE_SRC_DIR)/%.c, \
+				$(EXECUTE_OBJ_DIR)/%.o, $(EXECUTE_SRC))
+
+PUB_EXECUTE_HEADER_DIR = src/execute
+LOCAL_EXECUTE_HEADER_DIR = $(EXECUTE_SRC_DIR)
+EXECUTE_HEADERS = $(PUB_EXECUTE_HEADER_DIR)/execute.h \
+				 $(LOCAL_EXECUTE_HEADER_DIR)/local_execute.h
+
+# built_in
+BUILTIN_SRC_DIR = src/builtin
+BUILTIN_SRC = $(addprefix $(BUILTIN_SRC_DIR)/,fn_built_in_II.c \
+												fn_built_in_III.c \
+												fn_builtin_echo.c \
+												search_builtin_functions.c)
+
+BUILTIN_OBJ_DIR = obj/builtin
+BUILTIN_OBJ = $(patsubst $(BUILTIN_SRC_DIR)/%.c, \
+				$(BUILTIN_OBJ_DIR)/%.o, $(BUILTIN_SRC))
+
+PUB_BUILTIN_HEADER_DIR = include
+LOCAL_BUILTIN_HEADER_DIR = $(BUILTIN_SRC_DIR)
+BUILTIN_HEADERS = $(PUB_BUILTIN_HEADER_DIR)/builtin.h \
+				 $(LOCAL_BUILTIN_HEADER_DIR)/local_builtin.h
+
 # Directories of all objects above - only used to create obj folders
-OBJ_DIRS = $(OBJ_DIR) $(PARSER_OBJ_DIR)
+OBJ_DIRS = $(OBJ_DIR) $(PARSER_OBJ_DIR) $(EXECUTE_OBJ_DIR) $(BUILTIN_OBJ_DIR)
 
 # Libft
 LIBFT_DIR = libs/Libft-2.1.1
@@ -62,7 +96,9 @@ CPPFLAGS = -I$(READLINE_PATH)/include
 
 CFLAGS = -g -Wall -Wextra -Werror -I$(HEADER_DIR) \
 								  -I$(LOCAL_PARSER_HEADER_DIR) \
-							   	  -I$(LIBFT_HEADER_DIR)
+							   	  -I$(LIBFT_HEADER_DIR) \
+							   	  -I$(LOCAL_EXECUTE_HEADER_DIR) \
+							   	  -I$(LOCAL_BUILTIN_HEADER_DIR)LOCAL_EXECUTE_HEADER_DIR
 
 all: $(OBJ_DIRS) $(NAME)
 
@@ -71,8 +107,10 @@ $(OBJ_DIRS):
 	mkdir -p $@
 
 # Compile minishell
-$(NAME): $(OBJ) $(PARSER_OBJ) $(LIBFT) $(OBJ_MAIN)
-	cc $(CFLAGS) $(LDFLAGS) $(OBJ) $(PARSER_OBJ) $(LIBFT) $(OBJ_MAIN) \
+$(NAME): $(OBJ) $(PARSER_OBJ) $(LIBFT) $(OBJ_MAIN) \
+		 $(EXECUTE_OBJ) $(BUILTIN_OBJ)
+	cc $(CFLAGS) $(LDFLAGS) $(OBJ) $(PARSER_OBJ) \
+	   $(EXECUTE_OBJ) $(BUILTIN_OBJ) $(LIBFT) $(OBJ_MAIN) \
 	   $(LDFLAGS) -o $(NAME)
 
 # Build main obj in src
@@ -83,6 +121,14 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER)
 $(PARSER_OBJ_DIR)/%.o: $(PARSER_SRC_DIR)/%.c $(PARSER_HEADERS)
 	cc $(CFLAGS) -c $< -o $@
 
+# Build execute obj 
+$(EXECUTE_OBJ_DIR)/%.o: $(EXECUTE_SRC_DIR)/%.c $(EXECUTE_HEADERS)
+	cc $(CFLAGS) -c $< -o $@
+
+# Build builtin obj 
+$(BUILTIN_OBJ_DIR)/%.o: $(BUILTIN_SRC_DIR)/%.c $(BUILTIN_HEADERS)
+	cc $(CFLAGS) -c $< -o $@
+	
 # Trigger Libft compilation
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)

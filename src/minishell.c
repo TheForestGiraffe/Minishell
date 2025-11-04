@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 11:54:30 by plima             #+#    #+#             */
-/*   Updated: 2025/11/03 11:56:07 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/04 18:12:12 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ int	main(int argc, char **argv, char **envp)
 			if (!cmd_lst)
 				continue ;
 		}
+		execute (cmd_lst, envp);
 	}
+	
 	rl_clear_history();
 	free(line);
 	return (0);

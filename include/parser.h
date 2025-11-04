@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:41:33 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/03 11:56:28 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/04 18:14:49 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_token
 
 typedef struct s_cmd
 {
-	t_token			*argv_lst;
+	t_token			*argv;
 	char			*infile;
 	bool			is_infile_heredoc;
 	char			*outfile;
