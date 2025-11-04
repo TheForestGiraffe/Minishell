@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expanded_vars.c                                      :+:      :+:    :+:   */
+/*   fn_expand_tokens.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:58:40 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/17 09:59:23 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/04 14:48:11 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "local_parser.h"
 
-static int expand_this_var(char *var, char **envp, char **expanded_var)
+static int	expand_this_var(char *var, char **envp, char **expanded_var)
 {
 	if (var[0] == '$' && var[1] == '?')
 	{
