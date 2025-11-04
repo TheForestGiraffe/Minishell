@@ -6,13 +6,11 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:34:00 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/03 12:37:05 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/04 21:06:24 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "local_parser.h"
-
-//TODO: Remove after implementing build cmd_list
 
 t_cmd	*parse(char *line, char **envp)
 {
@@ -26,6 +24,6 @@ t_cmd	*parse(char *line, char **envp)
 		|| check_token_sequence(token_lst) == -1)
 		return (NULL);
 	expand_tokens(token_lst, envp);
-	cmd_lst = build_cmd_lst(token_lst);
+	cmd_lst = build_cmd_lst(token_lst, envp);
 	return (cmd_lst);
 }

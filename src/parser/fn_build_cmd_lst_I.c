@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fn_build_cmd_lst.c                                 :+:      :+:    :+:   */
+/*   fn_build_cmd_lst_I.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/03 12:13:45 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/04 21:06:16 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "local_parser.h"
 
-static int	convert_token(t_token **token, t_cmd **cmd, t_cmd **cmd_lst);
-static int	handle_redirection(t_token *cmd, t_cmd *token);
+static int	convert_token(t_token **token, t_cmd **cmd, t_cmd **cmd_lst,
+				char **envp);
+static int	handle_redirection(t_token *cmd, t_cmd *token, char **envp);
 static int	handle_out_and_rout(t_token *token, t_cmd *cmd);
-static int	handle_heredoc(t_token *token, t_cmd *cmd);
 
-t_cmd	*build_cmd_lst(t_token *token_lst)
+t_cmd	*build_cmd_lst(t_token *token_lst, char **envp)
 {
 	t_cmd	*cmd_lst;
 	t_cmd	*cmd;
@@ -34,7 +34,7 @@ t_cmd	*build_cmd_lst(t_token *token_lst)
 		return (NULL);
 	while (token)
 	{
-		if (convert_token(&token, &cmd, &cmd_lst) == -1)
+		if (convert_token(&token, &cmd, &cmd_lst, envp) == -1)
 		{
 			cmd_lst_delete_list(&cmd_lst);
 			return (NULL);
@@ -44,7 +44,8 @@ t_cmd	*build_cmd_lst(t_token *token_lst)
 	return (cmd_lst);
 }
 
-static int	convert_token(t_token **token, t_cmd **cmd, t_cmd **cmd_lst)
+static int	convert_token(t_token **token, t_cmd **cmd, t_cmd **cmd_lst,
+				char **envp)
 {
 	if (((*token)->type == WORD) || ((*token)->type == S_QT)
 		|| ((*token)->type == D_QT))
@@ -61,14 +62,14 @@ static int	convert_token(t_token **token, t_cmd **cmd, t_cmd **cmd_lst)
 	else if (((*token)->type == INPUT) || ((*token)->type == OUTPUT)
 		|| ((*token)->type == RINPUT) || ((*token)->type == ROUTPUT))
 	{
-		if (handle_redirection(*token, *cmd) == -1)
+		if (handle_redirection(*token, *cmd, envp) == -1)
 			return (-1);
 		*token = (*token)->next;
 	}
 	return (1);
 }
 
-int	handle_redirection(t_token *token, t_cmd *cmd)
+int	handle_redirection(t_token *token, t_cmd *cmd, char **envp)
 {
 	if (token->type == INPUT)
 	{
@@ -84,7 +85,7 @@ int	handle_redirection(t_token *token, t_cmd *cmd)
 	}
 	else if (token->type == RINPUT)
 	{
-		if (handle_heredoc(token, cmd) == -1)
+		if (handle_heredoc(token, cmd, envp) == -1)
 			return (-1);
 	}
 	return (1);
@@ -111,17 +112,5 @@ static int	handle_out_and_rout(t_token *token, t_cmd *cmd)
 		return (-1);
 	}
 	close(fd);
-	return (1);
-}
-
-static int	handle_heredoc(t_token *token, t_cmd *cmd)
-{
-	if (!token || !token->next || !token->next->content || !cmd)
-		return (-1);
-	cmd->is_infile_heredoc = true;
-	free(cmd->infile);
-	cmd->infile = ft_strdup(token->next->content);
-	if (!cmd->infile)
-		return (-1);
 	return (1);
 }
