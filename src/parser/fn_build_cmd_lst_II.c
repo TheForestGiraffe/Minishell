@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/06 13:48:43 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/07 15:19:55 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	handle_heredoc(t_token *token, t_cmd *cmd, char **envp)
 	if (!token || !token->next || !token->next->content || !cmd)
 		return (-1);
 	cmd->is_infile_heredoc = true;
-	free(cmd->infile);
-	cmd->infile = get_heredoc_filename();
+	if (!cmd->infile)
+		cmd->infile = get_heredoc_filename();
 	if (!cmd->infile)
 		return (-1);
 	if (execute_heredoc(cmd->infile, token->next, envp) == -1)
@@ -96,7 +96,7 @@ static int	check_and_expand_line(char **line, t_token_type type, char **envp)
 static char	*get_heredoc_filename(void)
 {
 	char				*filename;
-	static unsigned int	i = 0;
+	static unsigned int	i = 1;
 
 	while (1)
 	{
