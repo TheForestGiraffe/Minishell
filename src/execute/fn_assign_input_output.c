@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   fn_assign_input_output.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:55:08 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/18 11:44:38 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/07 09:54:29 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "parser.h"
 #include "local_execute.h"
 #include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
 
 static int	create_in(t_cmd *cmd_lst)
 {

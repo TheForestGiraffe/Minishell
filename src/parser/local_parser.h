@@ -6,19 +6,14 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:41:33 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/04 21:06:14 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/07 11:20:01 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LOCAL_PARSER_H
 # define LOCAL_PARSER_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include "libft.h"
 # include "parser.h"
-# include <fcntl.h>
-# include <unistd.h>
 
 // fn_tokenizer.c
 t_token	*tokenizer(char *str);
@@ -43,10 +38,10 @@ void	free_3(void *a, void *b, void *c);
 char	*ft_strdup_mod(const char *s1);
 char	*search_env(char *str, char **envp);
 int		replace_var(char **str, int i, int var_len, char *expanded_var);
-void	*perror_null(char *str);
 int		cal_var_len(char *str, int i);
 
 // fn_expand_tokens.c
+int		expand_vars(char **str, char **envp);
 int		expand_tokens(t_token *token_lst, char **envp);
 
 // fn_cmd_list.c

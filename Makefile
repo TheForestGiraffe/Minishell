@@ -6,7 +6,7 @@
 #    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2025/11/04 20:05:04 by pecavalc         ###   ########.fr        #
+#    Updated: 2025/11/07 10:30:38 by pecavalc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 OBJ_MAIN = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_MAIN))
 
 HEADER_DIR = include
-HEADER = $(HEADER_DIR)/minishell.h
+HEADER = $(HEADER_DIR)/signals.h
 
 # Parser
 PARSER_SRC_DIR = src/parser

@@ -6,11 +6,16 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/04 21:06:16 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:03:51 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "local_parser.h"
+#include <stdlib.h>
+#include <stdbool.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 static int	convert_token(t_token **token, t_cmd **cmd, t_cmd **cmd_lst,
 				char **envp);

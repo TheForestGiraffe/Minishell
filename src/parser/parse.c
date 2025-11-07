@@ -6,11 +6,12 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:34:00 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/04 21:06:24 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:20:19 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "local_parser.h"
+#include <stddef.h>
 
 t_cmd	*parse(char *line, char **envp)
 {

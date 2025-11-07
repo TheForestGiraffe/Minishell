@@ -6,12 +6,17 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/06 13:48:43 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:05:53 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "local_parser.h"
+#include "libft.h"
 #include <readline/readline.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdio.h>
 
 static int	execute_heredoc(char *filename, t_token *delim_token, char **envp);
 static int	check_and_expand_line(char **line, t_token_type type, char **envp);
