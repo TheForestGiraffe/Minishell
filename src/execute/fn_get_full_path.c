@@ -6,11 +6,16 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:55:08 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/04 18:14:55 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/07 09:59:14 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "parser.h"
+#include "libft.h"
 #include "local_execute.h"
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 static int	build_full_path(char **full_path, char *path, char *cmd)
 {

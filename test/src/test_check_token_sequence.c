@@ -6,12 +6,13 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 21:18:49 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/10/16 17:19:02 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/07 11:00:06 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "local_parser.h"
 #include "libft.h"
+#include <stdio.h>
 
 void		test(char *description, char *input, int expected_out, int *res);
 void		print_result(int res, char *description);

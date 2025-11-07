@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   fn_built_in_III.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 09:44:01 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/31 10:40:19 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/06 14:07:45 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "local_builtin.h"
 #include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <parser.h>
 
 int	builtin_cd(t_cmd *cmd_lst, char **envp)
 {

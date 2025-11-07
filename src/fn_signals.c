@@ -1,16 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   fn_signals.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 13:30:56 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/10/09 18:17:16 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:29:35 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "signals.h"
+#include <signal.h>
+#include <unistd.h>
+#include <readline/readline.h>
 
 int	g_signal = 0;
 

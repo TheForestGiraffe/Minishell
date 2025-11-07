@@ -11,7 +11,12 @@
 /* ************************************************************************** */
 
 #include "local_parser.h"
+#include "libft.h"
 #include <readline/readline.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdio.h>
 
 static int	execute_heredoc(char *filename, t_token *delim_token, char **envp);
 static int	check_and_expand_line(char **line, t_token_type type, char **envp);

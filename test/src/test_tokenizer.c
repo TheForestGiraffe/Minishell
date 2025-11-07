@@ -1,4 +1,6 @@
 #include "local_parser.h"
+#include <stddef.h>
+#include <stdio.h>
 
 void	print_list(t_token *ls_token)
 {

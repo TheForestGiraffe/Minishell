@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:41:33 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/04 18:14:49 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/07 11:20:34 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,7 @@ typedef struct s_cmd
 }	t_cmd;
 
 t_cmd	*parse(char *line, char **envp);
-int		fn_is_space(char c);
-int		expand_vars(char **str, char **envp);
-int		msg_int(char *str, int val);
-void	free_3(void *a, void *b, void *c);
-char	*ft_strdup_mod(const char *s1);
-void	*perror_null(char *str);
 char	*search_env(char *str, char **envp);
+void	*perror_null(char *str);
 
 #endif

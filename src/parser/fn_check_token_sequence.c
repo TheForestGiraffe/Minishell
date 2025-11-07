@@ -6,12 +6,14 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:17:15 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/03 09:14:38 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:08:07 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parser.h"
+#include "libft.h"
 #include "local_parser.h"
+#include <unistd.h>
 
 static int	check_pipe(t_token *cur_token, t_token *token_lst);
 static int	is_redirection(t_token_type type);

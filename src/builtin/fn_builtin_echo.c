@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   fn_builtin_echo.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 09:44:01 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/30 10:13:23 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/06 14:10:01 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "local_builtin.h"
+#include <stdio.h>
+#include <stdbool.h>
 #include "parser.h"
 
 static bool	is_flag(char *str)

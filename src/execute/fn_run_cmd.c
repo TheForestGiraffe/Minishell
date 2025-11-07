@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   fn_run_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:55:08 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/30 09:55:19 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/07 09:59:59 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "local_execute.h"
 #include "builtin.h"
+#include "parser.h"
+#include "local_execute.h"
+#include "libft.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 int	arg_len(t_cmd *cmd_lst)
 {

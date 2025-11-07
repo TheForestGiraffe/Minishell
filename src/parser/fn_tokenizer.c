@@ -1,15 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   fn_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:36:45 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/09 17:18:15 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:18:02 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include "libft.h"
 #include "local_parser.h"
 
 static int	set_buffer(char **buf, char *str)

@@ -6,10 +6,13 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:37:21 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/16 15:50:59 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:16:30 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include "libft.h"
 #include "local_parser.h"
 
 int	tls_add_back(t_token **lst, t_token *new)

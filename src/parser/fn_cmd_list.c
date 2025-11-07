@@ -6,11 +6,16 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/04 18:15:38 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:09:35 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "local_parser.h"
+#include <stdlib.h>
+#include <stdbool.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <libft.h>
 
 t_cmd	*cmd_lst_create(void)
 {

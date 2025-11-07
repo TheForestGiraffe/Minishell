@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   search_builtin_functions.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 09:44:01 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/30 09:53:48 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/06 14:13:28 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "local_builtin.h"
 #include "libft.h"
+#include "parser.h"
 
 int	search_builtin_functions(t_cmd *cmd_lst, char **envp)
 {
