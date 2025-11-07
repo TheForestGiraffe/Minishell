@@ -3,21 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   local_execute.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:54:07 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/30 09:43:13 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/07 09:45:13 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LOCAL_EXECUTE_H
 # define LOCAL_EXECUTE_H
 
-# include "minishell.h"
-# include "execute.h" // check for later
 # include "parser.h"
-
-typedef struct s_cmd	t_cmd;
 
 // fn_assign_input_output.c
 int		assign_input_output(t_cmd *cmd_lst);

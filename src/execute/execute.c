@@ -3,19 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:55:08 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/10/30 09:55:39 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/07 11:02:25 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <sys/wait.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include "parser.h"
 #include "local_execute.h"
+
+static int	cmd_lst_count(t_cmd *cmd_lst);
+
+int	execute(t_cmd *cmd_lst, char **envp)
+{
+	int	pipe_count;
+
+	pipe_count = cmd_lst_count (cmd_lst) - 1;
+	if (pipe_count == 0) 
+	{
+		if (assign_input_output (cmd_lst) == -1
+			|| run_cmd (cmd_lst, envp) == -1)
+			return (-1);
+		return (1);
+	}
+	return (0);
+}
 
 int	cmd_lst_count(t_cmd *cmd_lst)
 {
 	int	len;
-	
+
 	if (!cmd_lst)
 		return (0);
 	len = 1;
@@ -26,9 +48,10 @@ int	cmd_lst_count(t_cmd *cmd_lst)
 	}
 	return (len);
 }
+/*
 
-int	execute (t_cmd *cmd_lst, char **envp)
-{
+TODO:
+
 	int	pipe_count;
 	// int	**pid_arr;
 
@@ -61,6 +84,4 @@ int	execute (t_cmd *cmd_lst, char **envp)
 	// wait for all functions
 	// change exit_status 
 	// clean up
-
-	return (0);
-}
+*/

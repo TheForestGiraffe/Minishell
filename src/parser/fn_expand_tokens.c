@@ -6,11 +6,14 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:58:40 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/04 14:48:11 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:13:59 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "local_parser.h"
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 static int	expand_this_var(char *var, char **envp, char **expanded_var)
 {

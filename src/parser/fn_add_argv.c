@@ -6,11 +6,14 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/04 19:22:26 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/07 10:01:37 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "local_parser.h"
+#include "libft.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 static int	init_argv(t_cmd *cur_cmd, t_token *cur_token);
 

@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 13:10:00 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/03 11:59:52 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/07 11:50:27 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,45 +17,50 @@
 void    test(char *description, char *line, char ***expected_cmds, char **envp, int *res);
 void    print_result(int ok, char *description);
 static int  verify_cmd_list(t_cmd *cmd_list, char ***expected_cmds);
-static int  compare_argv_lst(t_token *argv_lst, char **expected);
+static int  compare_argv(t_token *argv, char **expected);
 
-int main(void)
+int main(int argc, char **argv, char **envp)
 {
-    int res = 1;
-    char **envp_dummy = NULL; // no environment needed for now
+	(void)argc;
+	(void)argv;
+	int res = 1;
 
-    // Pipeline tests
+	printf("\nTesting the correct build of the cmd_lst, including argv check.\n");
+	printf("Other data, such as in and outfiles are not verified here.\n\n");
+
+	// Pipeline tests
     char *pipeline1_cmd1[] = {"ls", "-l", NULL};
     char *pipeline1_cmd2[] = {"grep", "main", NULL};
     char *pipeline1_cmd3[] = {"wc", "-l", NULL};
     char **pipeline1[] = {pipeline1_cmd1, pipeline1_cmd2, pipeline1_cmd3, NULL};
-    test("Pipeline: ls -l | grep main | wc -l", "ls -l | grep main | wc -l", pipeline1, envp_dummy, &res);
+    test("Pipeline: ls -l | grep main | wc -l", "ls -l | grep main | wc -l", pipeline1, envp, &res);
 
     char *pipeline2_cmd1[] = {"echo", "hello", "world", NULL};
     char **pipeline2[] = {pipeline2_cmd1, NULL};
-    test("Single command: echo hello world", "echo hello world", pipeline2, envp_dummy, &res);
+    test("Single command: echo hello world", "echo hello world", pipeline2, envp, &res);
 
     char *pipeline3_cmd1[] = {"cat", NULL};
     char *pipeline3_cmd2[] = {"wc", "-l", NULL};
     char **pipeline3[] = {pipeline3_cmd1, pipeline3_cmd2, NULL};
-    test("Pipeline with simple pipe: cat | wc -l", "cat | wc -l", pipeline3, envp_dummy, &res);
+    test("Pipeline with simple pipe: cat | wc -l", "cat | wc -l", pipeline3, envp, &res);
 
     // Redirection tests (argv only, redirection not verified yet)
     char *redir1_cmd[] = {"echo", "hello", NULL};
     char **redir1[] = {redir1_cmd, NULL};
-    test("Simple output redirection: echo hello > out.txt", "echo hello > out.txt", redir1, envp_dummy, &res);
+    test("Simple output redirection: echo hello > out.txt", "echo hello > out.txt", redir1, envp, &res);
 
     char *redir2_cmd[] = {"cat", NULL};
     char **redir2[] = {redir2_cmd, NULL};
-    test("Multiple output redirections: cat > file1.txt >> file2.txt", "cat > file1.txt >> file2.txt", redir2, envp_dummy, &res);
+    test("Multiple output redirections: cat > file1.txt >> file2.txt", "cat > file1.txt >> file2.txt", redir2, envp, &res);
 
     char *redir3_cmd[] = {"cat", NULL};
     char **redir3[] = {redir3_cmd, NULL};
-    test("Input and output redirection: cat < input.txt > file.txt", "cat < input.txt > file.txt", redir3, envp_dummy, &res);
+    test("Input and output redirection: cat < input.txt > file.txt", "cat < input.txt > file.txt", redir3, envp, &res);
 
+    printf("\nHeredoc to be tested next - enter heredoc input and terminate with EOF:\n");
     char *redir4_cmd[] = {"cat", NULL};
     char **redir4[] = {redir4_cmd, NULL};
-    test("Heredoc input: cat << EOF", "cat << EOF", redir4, envp_dummy, &res);
+    test("Heredoc input: cat << EOF", "cat << EOF", redir4, envp, &res);
 
     if (res == 1)
         printf("\ntest_build_cmd_lst: [OK]\n\n");
@@ -95,7 +100,7 @@ static int verify_cmd_list(t_cmd *cmd_list, char ***expected_cmds)
 
     while (cur_cmd && expected_cmds[i])
     {
-        if (!compare_argv_lst(cur_cmd->argv_lst, expected_cmds[i]))
+        if (!compare_argv(cur_cmd->argv, expected_cmds[i]))
             return 0;
         cur_cmd = cur_cmd->next;
         i++;
@@ -106,10 +111,10 @@ static int verify_cmd_list(t_cmd *cmd_list, char ***expected_cmds)
     return 1;
 }
 
-static int compare_argv_lst(t_token *argv_lst, char **expected)
+static int compare_argv(t_token *argv, char **expected)
 {
     int     j = 0;
-    t_token *cur = argv_lst;
+    t_token *cur = argv;
 
     while (cur && expected[j])
     {
