@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/11 15:49:17 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/11 16:03:43 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static int	check_and_expand_line(char **line, t_token_type type, char **envp)
 	
 	exec_context.cmd_lst = NULL;
 	exec_context.envp = envp;
-	exec_context.exit_state = NULL;
+	exec_context.exit_state = 0;
 
 	if (type == WORD)
 	{

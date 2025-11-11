@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:58:40 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/10 19:54:07 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/11 16:04:10 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	expand_this_var(char *var, t_exec_context *exec_context, char **expan
 {
 	if (var[0] == '$' && var[1] == '?')
 	{
-		*expanded_var = ft_strdup (ft_itoa (*(exec_context->exit_state)));
+		*expanded_var = ft_strdup (ft_itoa (exec_context->exit_state));
 		if (!*expanded_var)
 		{
 			perror ("@expand_this_var.ft_itoa:");

@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:55:08 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/11 13:55:52 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/11 16:13:25 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	execute(t_exec_context *exec_context)
 		return (-1);
 	}
 	close_all_fds (fd_array, count - 1);
-	wait_all_pids (process_id_arr, count, exec_context->exit_state);
+	wait_all_pids (process_id_arr, count, &(exec_context->exit_state));
 	cleanup_exec (fd_array, &process_id_arr, exec_context, count);
 	return (1);
 }
