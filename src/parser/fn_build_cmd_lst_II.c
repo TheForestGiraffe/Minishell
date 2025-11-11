@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/11 18:53:55 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/11 23:02:21 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,16 @@
 static char	*get_heredoc_filename(void)
 {
 	char				*filename;
+	char				*tmp;
 	static unsigned int	i = 1;
 
 	while (1)
 	{
-		filename = ft_strjoin(".heredoc_tmp_", ft_itoa(i));
+		tmp = ft_itoa(i);
+		if (!tmp)
+			return (NULL);
+		filename = ft_strjoin(".heredoc_tmp_", tmp);
+		free(tmp);
 		if (!filename)
 			return (NULL);
 		if (access(filename, F_OK) != 0)
