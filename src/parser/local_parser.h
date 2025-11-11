@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:41:33 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/09 17:37:50 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/10 19:50:16 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int		replace_var(char **str, int i, int var_len, char *expanded_var);
 int		cal_var_len(char *str, int i);
 
 // fn_expand_tokens.c
-int		expand_vars(char **str, char **envp);
-int		expand_tokens(t_token *token_lst, char **envp);
+int		expand_vars(char **str, t_exec_context *exec_context);
+int		expand_tokens(t_token *token_lst, t_exec_context *exec_context);
 
 // fn_cmd_list.c
 t_cmd	*cmd_lst_create(void);

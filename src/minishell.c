@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 11:54:30 by plima             #+#    #+#             */
-/*   Updated: 2025/11/10 18:59:35 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/11 15:50:08 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ static t_exec_context	*create_exec_context(char **envp)
 		perror ("@read_parse_and_execute.malloc: ");
 		return (NULL);
 	}
+
 	exec_context->envp = envp;
-	exec_context->exit_state = NULL;
+	exec_context->exit_state = malloc (sizeof (int));
+	*(exec_context->exit_state) = 0;
 	exec_context->cmd_lst = NULL;
 	return (exec_context);
 }
@@ -40,62 +42,47 @@ static int	handle_eof(t_exec_context	**exec_context)
 {
 	ft_putstr_fd("exit\n", 1);
 	rl_clear_history();
+	free((*exec_context)->exit_state);
 	free(*exec_context);
 	return (1);
 }
 
-static int	read_parse_and_execute(char **envp)
+static int	read_parse_and_execute(t_exec_context *exec_context)
 {
 	char			*line;
-	t_exec_context	*exec_context;
 
-	exec_context = create_exec_context (envp);
-	if (!exec_context)
-		return (-1);
 	line = readline("minishell$ ");
 	if (!line)
 		return (handle_eof(&exec_context));
 	if (*line)
 	{
 		add_history(line);
-		exec_context->cmd_lst = parse(line, envp);
+		exec_context->cmd_lst = parse(line, exec_context);
 		if (exec_context->cmd_lst)
 			execute(exec_context);
 	}
 	free(line);
-	free(exec_context);
 	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_exec_context	*exec_context;
+
 	(void)argc;
 	(void)argv;
+	exec_context = create_exec_context (envp);
+	if (!exec_context)
+		return (-1);
+
 	register_signals();
 	while (1)
 	{
-		if (read_parse_and_execute(envp))
+		if (read_parse_and_execute(exec_context))
 			break ;
 	}
 	rl_clear_history();
+	free(exec_context->exit_state);
+	free(exec_context);
 	return (0);
-}
-
-
-#define malloc xmalloc
-
-
-void *xmalloc(size_t size)
-{
-    static int count = 0;
-    count++;
-
-    // Fail every Nth allocation
-    if (count == 5)
-    {
-        fprintf(stderr, "[xmalloc] Simulating malloc failure at #%d\n", count);
-        return NULL;
-    }
-
-    return malloc(size);
 }
