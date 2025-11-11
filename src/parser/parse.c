@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:34:00 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/11 18:58:30 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/11 21:20:45 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,5 @@ void	parse(char *line, t_exec_context *exec_context)
 		return ;
 	}
 	build_cmd_lst(token_lst, exec_context);
-	if (!exec_context->cmd_lst)
-	{
-		tls_delete_list (&token_lst);
-		return ;
-	}
 	tls_delete_list (&token_lst);
 }
