@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 11:54:30 by plima             #+#    #+#             */
-/*   Updated: 2025/11/11 17:47:15 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/12 11:37:21 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static int	read_parse_and_execute(t_exec_context *exec_context)
 		if (exec_context->cmd_lst)
 		{
 			execute(exec_context);
-			exec_context->cmd_lst = NULL;
 		}
 	}
 	free(line);

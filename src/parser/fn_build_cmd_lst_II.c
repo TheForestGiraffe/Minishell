@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/11 16:03:43 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/12 11:42:43 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,15 @@ static int	read_and_write_line(t_token *tok, int fd, char **envp)
 	return (0);
 }
 
+// get correct exec_context 
 static int	check_and_expand_line(char **line, t_token_type type, char **envp)
 {
-	int	ret;
-	t_exec_context exec_context;
-	
+	int				ret;
+	t_exec_context	exec_context;
+
 	exec_context.cmd_lst = NULL;
 	exec_context.envp = envp;
 	exec_context.exit_state = 0;
-
 	if (type == WORD)
 	{
 		ret = expand_vars(line, &exec_context);
@@ -101,7 +101,6 @@ static int	check_and_expand_line(char **line, t_token_type type, char **envp)
 			return (-1);
 	}
 	return (1);
-	// get correct exec_context 
 }
 
 static char	*get_heredoc_filename(void)

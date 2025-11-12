@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:55:08 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/11 16:56:13 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/12 11:45:01 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/wait.h>
-
-static int	cmd_lst_count(t_cmd *cmd_lst)
-{
-	int	len;
-
-	if (!cmd_lst)
-		return (0);
-	len = 1;
-	while (cmd_lst->next)
-	{
-		len ++;
-		cmd_lst = cmd_lst->next;
-	}
-	return (len);
-}
 
 static void	close_all_fds(int **fd_array, int count)
 {
@@ -64,6 +49,32 @@ static void	cleanup_exec(int **fd_array, int **process_id_arr,
 	cmd_lst_delete_list (&exec_context->cmd_lst);
 }
 
+static int	execute_body(int *process_id_arr, int **fd_array,
+			int count, t_exec_context *exec_context)
+{
+	t_cmd	*head;
+
+	head = exec_context->cmd_lst;
+	process_id_arr = create_process_id_arr (&fd_array, count);
+	if (!process_id_arr)
+	{
+		cmd_lst_delete_list (&head);
+		return (-1);
+	}
+	if (loop_pids (process_id_arr, fd_array, count, exec_context) == -1)
+	{
+		close_all_fds (fd_array, count - 1);
+		exec_context->cmd_lst = head;
+		cleanup_exec (fd_array, &process_id_arr, exec_context, count);
+		return (-1);
+	}
+	close_all_fds (fd_array, count - 1);
+	wait_all_pids (process_id_arr, count, &(exec_context->exit_state));
+	exec_context->cmd_lst = head;
+	cleanup_exec (fd_array, &process_id_arr, exec_context, count);
+	return (1);
+}
+
 int	execute(t_exec_context *exec_context)
 {
 	int	*process_id_arr;
@@ -76,20 +87,9 @@ int	execute(t_exec_context *exec_context)
 		cmd_lst_delete_list (&exec_context->cmd_lst);
 		return (1);
 	}
-	process_id_arr = create_process_id_arr (&fd_array, count);
-	if (!process_id_arr)
-	{
-		cmd_lst_delete_list (&exec_context->cmd_lst);
+	process_id_arr = NULL;
+	fd_array = NULL;
+	if (execute_body (process_id_arr, fd_array, count, exec_context) == -1)
 		return (-1);
-	}
-	if (loop_pids (process_id_arr, fd_array, count, exec_context) == -1)
-	{
-		close_all_fds (fd_array, count - 1);
-		cleanup_exec (fd_array, &process_id_arr, exec_context, count);
-		return (-1);
-	}
-	close_all_fds (fd_array, count - 1);
-	wait_all_pids (process_id_arr, count, &(exec_context->exit_state));
-	cleanup_exec (fd_array, &process_id_arr, exec_context, count);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:55:08 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/09 18:32:02 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/12 11:28:41 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,10 @@ int	*create_process_id_arr(int ***fd_array, int count)
 			return (perror_null ("@create_process_id_arr.create_fd_array:"));
 		}
 		if (assign_pipes_to_fds (*fd_array, count - 1) == -1)
+		{
+			free (process_id_arr);
 			return (NULL);
+		}
 	}
 	else
 		*fd_array = NULL;

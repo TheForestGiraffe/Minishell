@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:58:40 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/11 17:42:20 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/12 11:40:17 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static int	expand_this_var(char *var, t_exec_context *exec_context, char **expanded_var)
+static int	expand_this_var(char *var, t_exec_context *exec_context,
+			char **expanded_var)
 {
 	char	*temp;
 
@@ -38,7 +39,8 @@ static int	expand_this_var(char *var, t_exec_context *exec_context, char **expan
 	return (1);
 }
 
-static int	extract_var(char **str, t_exec_context *exec_context, int var_len, int i)
+static int	extract_var(char **str, t_exec_context *exec_context,
+			int var_len, int i)
 {
 	char	*var;
 	char	*expanded_var;
