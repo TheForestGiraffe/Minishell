@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:55:08 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/12 11:45:01 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/12 12:37:58 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,16 @@ static void	close_all_fds(int **fd_array, int count)
 static void	wait_all_pids(int *process_id_arr, int count, int *exit_state)
 {
 	int	i;
+	int status;
 
 	i = 0;
 	while (i < count)
 	{
-		waitpid (process_id_arr[i], exit_state, WUNTRACED);
+		waitpid (process_id_arr[i], &status, WUNTRACED);
+		if (WIFEXITED(status))
+			*exit_state = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			*exit_state = 128 + WTERMSIG(status);
 		i ++;
 	}
 }

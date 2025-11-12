@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:55:08 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/09 11:49:40 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/12 12:11:12 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,18 +103,24 @@ int	run_external(t_cmd *cmd_lst, char **envp)
 	return (1);
 }
 
-int	run_cmd(t_cmd *cmd_lst, char **envp)
+int	run_cmd(t_exec_context *exec_context)
 {
 	int	builtin;
 
-	if (!*cmd_lst->argv->content)
+	if (!*exec_context->cmd_lst->argv->content)
 		return (0);
-	builtin = search_builtin_functions (cmd_lst, envp);
+	builtin = search_builtin_functions (exec_context->cmd_lst, exec_context->envp);
 	if (builtin == 1)
+	{
+		exec_context->exit_state = 1;
 		return (1);
+	}
 	else if (builtin == -1)
+	{
+		exec_context->exit_state = -1;
 		return (-1);
-	if (run_external (cmd_lst, envp) == -1)
+	}
+	if (run_external (exec_context->cmd_lst, exec_context->envp) == -1)
 		return (-1);
 	return (1);
 }
