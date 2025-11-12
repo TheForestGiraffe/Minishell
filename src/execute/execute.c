@@ -3,85 +3,98 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:55:08 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/07 11:02:25 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/12 12:37:58 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <sys/wait.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include "parser.h"
 #include "local_execute.h"
+#include "parser.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/wait.h>
 
-static int	cmd_lst_count(t_cmd *cmd_lst);
-
-int	execute(t_cmd *cmd_lst, char **envp)
+static void	close_all_fds(int **fd_array, int count)
 {
-	int	pipe_count;
+	int	i;
 
-	pipe_count = cmd_lst_count (cmd_lst) - 1;
-	if (pipe_count == 0) 
+	i = 0;
+	while (i < count)
 	{
-		if (assign_input_output (cmd_lst) == -1
-			|| run_cmd (cmd_lst, envp) == -1)
-			return (-1);
-		return (1);
+		close (fd_array[i][0]);
+		close (fd_array[i][1]);
+		i++;
 	}
-	return (0);
 }
 
-int	cmd_lst_count(t_cmd *cmd_lst)
+static void	wait_all_pids(int *process_id_arr, int count, int *exit_state)
 {
-	int	len;
+	int	i;
+	int status;
 
-	if (!cmd_lst)
-		return (0);
-	len = 1;
-	while (cmd_lst->next)
+	i = 0;
+	while (i < count)
 	{
-		len ++;
-		cmd_lst = cmd_lst->next;
+		waitpid (process_id_arr[i], &status, WUNTRACED);
+		if (WIFEXITED(status))
+			*exit_state = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			*exit_state = 128 + WTERMSIG(status);
+		i ++;
 	}
-	return (len);
 }
-/*
 
-TODO:
+static void	cleanup_exec(int **fd_array, int **process_id_arr,
+						t_exec_context *exec_context, int count)
+{
+	clear_fd_array (fd_array, count - 1);
+	free (*process_id_arr);
+	cmd_lst_delete_list (&exec_context->cmd_lst);
+}
 
-	int	pipe_count;
-	// int	**pid_arr;
+static int	execute_body(int *process_id_arr, int **fd_array,
+			int count, t_exec_context *exec_context)
+{
+	t_cmd	*head;
 
-	pipe_count = cmd_lst_count (cmd_lst) - 1;
-	if (pipe_count == 0) 
+	head = exec_context->cmd_lst;
+	process_id_arr = create_process_id_arr (&fd_array, count);
+	if (!process_id_arr)
 	{
-		if (assign_input_output (cmd_lst) == -1
-		|| run_cmd (cmd_lst, envp) == -1)
-		{
-			// cmd_lst_clear (cmd_lst); FROM PEDRO
-			return (-1);
-		}
-		// cmd_lst_clear (cmd_lst); FROM PEDRO
+		cmd_lst_delete_list (&head);
+		return (-1);
+	}
+	if (loop_pids (process_id_arr, fd_array, count, exec_context) == -1)
+	{
+		close_all_fds (fd_array, count - 1);
+		exec_context->cmd_lst = head;
+		cleanup_exec (fd_array, &process_id_arr, exec_context, count);
+		return (-1);
+	}
+	close_all_fds (fd_array, count - 1);
+	wait_all_pids (process_id_arr, count, &(exec_context->exit_state));
+	exec_context->cmd_lst = head;
+	cleanup_exec (fd_array, &process_id_arr, exec_context, count);
+	return (1);
+}
+
+int	execute(t_exec_context *exec_context)
+{
+	int	*process_id_arr;
+	int	**fd_array;
+	int	count;
+
+	count = cmd_lst_count (exec_context->cmd_lst);
+	if (count == 0)
+	{
+		cmd_lst_delete_list (&exec_context->cmd_lst);
 		return (1);
 	}
-
-	// create pipes array
-	// pid_arr = malloc (sizeof (int *) * count);
-
-	// fork ();
-	// while loop
-		// if on child fork
-		// assign pid[i] to function
-		// assign_input_output (cmd_lst) **overrides pipes**
-		// run_cmd (cmd_lst)
-		// on parent close pids
-		// clean up
-		// cmd_lst = cmd_lst.next;
-
-	// wait for all functions
-	// change exit_status 
-	// clean up
-*/
+	process_id_arr = NULL;
+	fd_array = NULL;
+	if (execute_body (process_id_arr, fd_array, count, exec_context) == -1)
+		return (-1);
+	return (1);
+}

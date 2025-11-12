@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fn_add_argv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/07 10:01:37 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/09 18:33:14 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	add_argv(t_token *cur_token, t_cmd *cur_cmd)
 			return (-1);
 		return (1);
 	}
-	new_argv_node = tls_create(cur_token->content); 
+	new_argv_node = tls_create(cur_token->content);
 	if (!new_argv_node)
 		return (-1);
 	if (tls_add_back(&cur_cmd->argv, new_argv_node) == -1)

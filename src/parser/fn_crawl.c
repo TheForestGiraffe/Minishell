@@ -47,7 +47,7 @@ static int	handle_redirects(char *buf, char **p, t_token **head)
 	buf[1] = str[1];
 	buf[2] = '\0';
 	(*p) += 2;
-	current = tls_create (ft_strdup (buf));
+	current = tls_create (buf);
 	if (!current)
 		return (-1);
 	if (buf[0] == '>')
@@ -71,7 +71,7 @@ static int	handle_special(char *buf, char **p, t_token **head)
 		buf[0] = *str;
 		buf[1] = '\0';
 		(*p)++;
-		current = tls_create (ft_strdup (buf));
+		current = tls_create (buf);
 		if (!current)
 			return (-1);
 		figure_type (&current, buf[0]);

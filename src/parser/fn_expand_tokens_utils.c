@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fn_expand_tokens_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:58:40 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/07 10:11:54 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/09 17:39:48 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include "libft.h"
 #include "local_parser.h"
+#include "parser.h"
 
 int	cal_var_len(char *str, int i)
 {

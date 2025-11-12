@@ -3,50 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:41:33 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/07 11:20:34 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/10 19:38:58 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# include <stdbool.h>
+# include "types.h"
 
-typedef enum e_type
-{
-	UNSET = -1,
-	WORD,
-	PIPE,
-	INPUT,
-	OUTPUT,
-	RINPUT,
-	ROUTPUT,
-	S_QT,
-	D_QT
-}	t_token_type;
-
-typedef struct s_token
-{
-	char			*content;
-	struct s_token	*next;
-	t_token_type	type;
-}	t_token;
-
-typedef struct s_cmd
-{
-	t_token			*argv;
-	char			*infile;
-	bool			is_infile_heredoc;
-	char			*outfile;
-	bool			append;
-	struct s_cmd	*next;
-}	t_cmd;
-
-t_cmd	*parse(char *line, char **envp);
+t_cmd	*parse(char *line, t_exec_context *exec_context);
 char	*search_env(char *str, char **envp);
 void	*perror_null(char *str);
+int		cmd_lst_delete_list(t_cmd **head);
 
 #endif

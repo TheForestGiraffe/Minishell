@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
+#    By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2025/11/07 10:30:38 by pecavalc         ###   ########.fr        #
+#    Updated: 2025/11/09 17:45:39 by kalhanaw         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,8 @@ EXECUTE_SRC = $(addprefix $(EXECUTE_SRC_DIR)/,execute.c \
 												fn_assign_input_output.c \
 												fn_get_full_path.c \
 												fn_run_cmd.c \
+												fn_create_process_id_arr.c \
+												fn_loop_pids.c \
 												fn_utils.c)
 
 EXECUTE_OBJ_DIR = obj/execute

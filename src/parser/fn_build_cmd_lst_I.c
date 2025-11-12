@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fn_build_cmd_lst_I.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/07 10:03:51 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/11 17:47:36 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ t_cmd	*build_cmd_lst(t_token *token_lst, char **envp)
 	if (!cmd)
 		return (NULL);
 	if (cmd_lst_add_back(&cmd_lst, cmd) == -1)
+	{
+		free (cmd);
 		return (NULL);
+	}
 	while (token)
 	{
 		if (convert_token(&token, &cmd, &cmd_lst, envp) == -1)
