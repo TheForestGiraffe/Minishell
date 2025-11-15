@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 16:52:57 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/15 19:18:22 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/15 20:29:59 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,21 @@
 #include "local_execute.h"
 #include "builtin.h"
 
+static void	restore_fds(int stdin, int stdout)
+{
+	dup2(stdin, STDIN_FILENO);
+	dup2(stdout, STDOUT_FILENO);
+	close(stdin);
+	close(stdout);
+}
+
 int	run_builtin_in_parent(t_exec_context *exec_context)
 {
-	int stdin;
-	int stdout;
+	int	stdin;
+	int	stdout;
 
+	if (!*exec_context->cmd_lst->argv->content)
+		return (0);
 	stdin = dup(STDIN_FILENO);
 	stdout = dup(STDOUT_FILENO);
 	if (stdin == -1 || stdout == -1)
@@ -31,11 +41,9 @@ int	run_builtin_in_parent(t_exec_context *exec_context)
 	if (assign_input_output(exec_context->cmd_lst) == -1
 		|| search_builtin_functions(exec_context) == -1)
 	{
-		dup2(stdin, STDIN_FILENO);
-		dup2(stdout, STDOUT_FILENO);
-		close(stdin);
-		close(stdout);
+		restore_fds(stdin, stdout);
 		return (-1);
 	}
+	restore_fds(stdin, stdout);
 	return (1);
 }

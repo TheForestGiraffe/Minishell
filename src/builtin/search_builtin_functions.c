@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 09:44:01 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/15 16:43:26 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/15 19:46:42 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	search_builtin_functions(t_exec_context *ctxt)
 	int		return_val;
 
 	return_val = 0;
-	name = ctxt->cmd_lst->argv[0].content;
+	name = ctxt->cmd_lst->argv->content;
 	len = 1024;
 	if (ft_strncmp (name, "echo", len) == 0)
 		return_val = builtin_echo (ctxt);
@@ -44,7 +44,9 @@ int	is_builtin(t_cmd *cmd_lst)
 {
 	char	*name;
 
-	name = cmd_lst->argv[0].content;
+	if (!cmd_lst || !cmd_lst->argv)
+		return (0);
+	name = cmd_lst->argv->content;
 	if (ft_strncmp (name, "echo", 5) == 0
 		|| ft_strncmp (name, "cd", 3) == 0
 		|| ft_strncmp (name, "pwd", 4) == 0

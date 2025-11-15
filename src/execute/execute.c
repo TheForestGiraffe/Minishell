@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:55:08 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/15 19:16:42 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/15 20:15:39 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,11 @@ int	execute(t_exec_context *exec_context)
 	if (count == 1 && is_builtin(exec_context->cmd_lst))
 	{
 		if (run_builtin_in_parent(exec_context) == -1)
+		{
+			cmd_lst_delete_list (&exec_context->cmd_lst);
 			return (-1);
+		}
+		cmd_lst_delete_list (&exec_context->cmd_lst);
 		return (1);
 	}
 	process_id_arr = NULL;
