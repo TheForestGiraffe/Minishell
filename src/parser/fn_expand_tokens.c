@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:58:40 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/13 13:52:54 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/17 18:39:54 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static int	extract_var(char **str, t_exec_context *exec_context,
 	char	*var;
 	char	*expanded_var;
 	char	temp;
+	int		len;
 
 	var = &(*str)[i];
 	temp = var[var_len];
@@ -57,8 +58,9 @@ static int	extract_var(char **str, t_exec_context *exec_context,
 		free (expanded_var);
 		return (-1);
 	}
+	len = ft_strlen (expanded_var);
 	free (expanded_var);
-	return (ft_strlen (expanded_var));
+	return (len);
 }
 
 static int	process_str(char **str, t_exec_context *exec_context)
