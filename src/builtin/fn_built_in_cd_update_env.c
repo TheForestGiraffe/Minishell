@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 14:26:12 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/17 15:00:45 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/17 15:43:02 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int	assemble_key_value_pair(char **key_value_pair, char *key,
 									char *value, char **envp)
 {
 	char	*tmp;
+	char	*pwd_tmp;
 
 	*key_value_pair = ft_strjoin(key, "=");
 	if (!(*key_value_pair))
@@ -29,18 +30,22 @@ static int	assemble_key_value_pair(char **key_value_pair, char *key,
 		return (-1);
 	}
 	tmp = *key_value_pair;
+	pwd_tmp = NULL;
 	if (value)
 		*key_value_pair = ft_strjoin(*key_value_pair, value);
 	else
-		*key_value_pair = ft_strjoin(*key_value_pair, search_env("PWD", envp));
+	{
+		pwd_tmp = search_env("PWD", envp);
+		*key_value_pair = ft_strjoin(*key_value_pair, pwd_tmp);
+	}
 	if (!(*key_value_pair))
 	{
 		ft_putstr_fd("@set_envp: 2nd ft_strjoin failed", 2);
 		free(tmp);
+		free(pwd_tmp);
 		return (-1);
 	}
-	free(tmp);
-	return (1);
+	return (free(tmp), free(pwd_tmp), 1);
 }
 
 static int	set_envp(char *key, char *value, char **envp)
@@ -93,5 +98,6 @@ int	update_env(char *cur_wd, char **envp)
 		free(new_wd_full_path);
 		return (-1);
 	}
+	free(new_wd_full_path);
 	return (1);
 }

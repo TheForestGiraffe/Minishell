@@ -6,15 +6,24 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 14:13:04 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/15 23:43:30 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/17 18:19:04 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "local_builtin.h"
 #include "types.h"
+#include "envp.h"
+#include "parser.h"
 #include <stdlib.h>
 #include <unistd.h>
+
+static void cleanup_and_exit(t_exec_context *exec_context, int exit_code)
+{
+	free_envp(exec_context->envp);
+	cmd_lst_delete_list(&exec_context->cmd_lst);
+	exit(exit_code);
+}
 
 static void	handle_exit_with_two_args(t_exec_context *exec_context)
 {
@@ -41,7 +50,7 @@ int	builtin_exit(t_exec_context *exec_context)
 
 	if (!exec_context || !exec_context->cmd_lst
 		|| !exec_context->cmd_lst->argv->content)
-		exit(EXIT_FAILURE);
+		cleanup_and_exit(exec_context, EXIT_FAILURE);
 	cur_argv = exec_context->cmd_lst->argv;
 	nr_args = 1;
 	while (cur_argv->next)
@@ -53,11 +62,11 @@ int	builtin_exit(t_exec_context *exec_context)
 	{
 		if (exec_context->main_pid == getpid())
 			ft_printf("exit\n");
-		exit(exec_context->exit_state);
+		cleanup_and_exit(exec_context, exec_context->exit_state);
 	}
 	if (nr_args == 2)
 		handle_exit_with_two_args(exec_context);
 	ft_printf("exit: too many arguments\n");
-	exit(1);
+	cleanup_and_exit(exec_context, 1);
 	return (1);
 }

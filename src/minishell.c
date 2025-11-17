@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 11:54:30 by plima             #+#    #+#             */
-/*   Updated: 2025/11/17 15:13:33 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/17 18:12:15 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,52 +15,12 @@
 #include "parser.h"
 #include "execute.h"
 #include "echoctl.h"
+#include "envp.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <unistd.h>
-
-static int	copy_env_line(char **envp, char **new_envp, size_t i)
-{
-	new_envp[i] = ft_strdup(envp[i]);
-	if (!new_envp[i])
-	{
-		while (i > 0)
-			free(new_envp[--i]);
-		free(new_envp);
-		perror("@copy_environment.ft_strdup");
-		return (-1);
-	}
-	return (1);
-}
-
-static char	**copy_env(char **envp)
-{
-	char	**new_envp;
-	size_t	i;
-	size_t	length;
-
-	i = 0;
-	while (envp[i])
-		i++;
-	length = i;
-	new_envp = (char **)malloc((length + 1) * sizeof(char *));
-	if (!new_envp)
-	{
-		perror("@copy_environment.malloc");
-		return (NULL);
-	}
-	i = 0;
-	while (i < length)
-	{
-		if (copy_env_line(envp, new_envp, i) == -1)
-			return (NULL);
-		i++;
-	}
-	new_envp[i] = NULL;
-	return (new_envp);
-}
 
 static int	read_parse_and_execute(t_exec_context *exec_context)
 {
@@ -93,7 +53,7 @@ int	main(int argc, char **argv, char **envp)
 	atexit(enable_ctrl_chars_printing);
 	(void)argc;
 	(void)argv;
-	exec_context.envp = copy_env(envp);
+	exec_context.envp = copy_envp(envp);
 	if (!exec_context.envp)
 		return (-1);
 	exec_context.exit_state = 0;
@@ -106,5 +66,6 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 	}
 	rl_clear_history();
+	free_envp(exec_context.envp);
 	return (0);
 }
