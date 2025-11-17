@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 14:13:04 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/17 18:19:04 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/17 18:50:39 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ static void	handle_exit_with_two_args(t_exec_context *exec_context)
 	{
 		ft_printf("exit: %s: numeric argument required\n",
 			exec_context->cmd_lst->argv->next->content);
-		exit(255);
+		cleanup_and_exit(exec_context, 255);
 	}
 	if (exec_context->main_pid == getpid())
 		ft_printf("exit\n");
 	exec_context->exit_state = (unsigned char)number;
-	exit(exec_context->exit_state);
+	cleanup_and_exit(exec_context, exec_context->exit_state);
 }
 
 int	builtin_exit(t_exec_context *exec_context)
