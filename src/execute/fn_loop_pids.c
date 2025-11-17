@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   fn_loop_pids.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:55:08 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/12 12:31:42 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/17 21:28:13 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "local_execute.h"
+#include "signals.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h>
 
 static int	connect_pipes(int **fd_array, int pos, int count)
 {
@@ -42,7 +44,8 @@ static int	connect_pipes(int **fd_array, int pos, int count)
 static int	run_on_child(int **fd_array, t_exec_context *exec_context,
 						int i, int count)
 {
-	if (connect_pipes (fd_array, i, count - 1) == -1)
+	signal(SIGQUIT, SIG_DFL);
+	if (connect_pipes(fd_array, i, count - 1) == -1)
 		return (-1);
 	if (assign_input_output (exec_context->cmd_lst) == -1
 		|| run_cmd (exec_context) == -1)
