@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 14:26:12 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/17 13:24:14 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/17 13:52:12 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-// TODO: test with valgrind
-// TODO: test
 
 static int	change_dir(char *new_wd, char *cur_wd)
 {
