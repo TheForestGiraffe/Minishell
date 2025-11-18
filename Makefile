@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
+#    By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2025/11/17 13:01:16 by pecavalc         ###   ########.fr        #
+#    Updated: 2025/11/18 17:20:21 by kalhanaw         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,8 @@ BUILTIN_SRC_DIR = src/builtin
 BUILTIN_SRC = $(addprefix $(BUILTIN_SRC_DIR)/, fn_built_in_cd.c \
 												fn_built_in_cd_update_env.c \
 												fn_built_in_env.c \
-												fn_built_in_unset.c \
+												fn_built_in_unset_I.c \
+												fn_built_in_unset_II.c \
 												fn_built_in_III.c \
 												fn_builtin_echo.c \
 												fn_builtin_exit.c \

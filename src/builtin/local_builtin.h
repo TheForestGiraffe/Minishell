@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   local_builtin.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:54:07 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/17 14:57:54 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/18 17:52:00 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,8 @@ int		builtin_export(t_exec_context *ctxt);
 int		builtin_unset(t_exec_context *ctxt);
 int		builtin_env(t_exec_context *ctxt);
 int		builtin_exit(t_exec_context *ctxt);
+
+// fn_built_in_unset_II.c
+int		unset_this(int index, char ***envp);
 
 #endif
