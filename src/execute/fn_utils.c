@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:55:08 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/12 11:45:20 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/24 11:08:02 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	*free_str_array(char **arr)
 {
 	int	i;
 
+	if (!arr)
+		return (NULL);
 	i = 0;
 	while (arr[i])
 	{

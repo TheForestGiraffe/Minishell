@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 09:44:07 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/18 17:26:03 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/24 16:46:44 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "local_execute.h"
 #include "local_builtin.h"
 
-static int	validate_start_letter(char *str)
+int	validate_start_letter(char *str)
 {
 	if (*str != '_' && !ft_isalpha (*str))
 		return (0);
@@ -44,7 +44,7 @@ static void	print_error(char *str)
 	ft_putstr_fd ("': not a valid identifier\n", 2);
 }
 
-static int	search_index(char *str, char **envp)
+int	search_key_index(char *str, char **envp)
 {
 	int		i;
 	int		len;
@@ -84,7 +84,7 @@ int	builtin_unset(t_exec_context *ctxt)
 			print_error (current->content);
 			return (-1);
 		}
-		index = search_index (current->content, ctxt->envp);
+		index = search_key_index (current->content, ctxt->envp);
 		if (index >= 0)
 		{
 			if (unset_this (index, &(ctxt->envp)) == -1)

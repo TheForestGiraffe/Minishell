@@ -6,7 +6,7 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 09:44:07 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/18 17:51:29 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/24 17:32:57 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "libft.h"
 #include "local_execute.h"
 
-static int	get_len_array(char **array)
+int	get_len_array(char **array)
 {
 	int	i;
 
@@ -28,10 +28,12 @@ static int	get_len_array(char **array)
 	return (i);
 }
 
-static void	free_str_n_array(char **arr, int pos)
+void	free_str_n_array(char **arr, int pos)
 {
 	int	i;
 
+	if (!arr)
+		return ;
 	i = 0;
 	while (i < pos)
 	{
@@ -42,7 +44,7 @@ static void	free_str_n_array(char **arr, int pos)
 }
 
 int	copy_exclude_str_arr(int index, char ***envp,
-	char ***new_envp, int len_envp)
+	char ***new_envp)
 {
 	int		i;
 	int		j;
@@ -63,7 +65,7 @@ int	copy_exclude_str_arr(int index, char ***envp,
 		}
 		i ++;
 	}
-	(*new_envp)[len_envp - 1] = NULL;
+	(*new_envp)[j] = NULL;
 	return (1);
 }
 
@@ -76,7 +78,7 @@ int	unset_this(int index, char ***envp)
 	new_envp = malloc (sizeof (char *) * len_envp);
 	if (!new_envp)
 		return (perror_int ("@unset_this.malloc: ", -1));
-	if (copy_exclude_str_arr (index, envp, &new_envp, len_envp) == -1)
+	if (copy_exclude_str_arr (index, envp, &new_envp) == -1)
 		return (-1);
 	free_str_n_array (*envp, len_envp);
 	*envp = new_envp;
