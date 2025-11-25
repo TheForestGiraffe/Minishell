@@ -6,87 +6,142 @@
 /*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 09:44:01 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/24 16:57:38 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/25 15:40:10 by kalhanaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <parser.h>
 #include "local_builtin.h"
 #include "local_execute.h"
 #include "libft.h"
 
-static int	has_forbidden_n(char *str, int len)
+int	search_and_unset(char *content, char ***array, char *equal_pos)
 {
-	int		i;
+	int		index;
 
-	i = 0;
-	while (str[i] && i < len)
+	index = -1;
+	if (equal_pos)
 	{
-		if (!ft_isalnum (str[i]) && str[i] != '_')
-			return (1);
-		i++;
+		content = ft_substr (content, 0, equal_pos - content);
+		if (!content)
+			return (perror_int ("@search_and_unset:ft_substring: ", -1));
 	}
-	return (0);
-}
-
-bool	is_valid(char *content)
-{
-	char	*char_position;
-
-	if (!validate_start_letter (content))
-		return (false);
-	char_position = ft_strrchr (content, '=');
-	if (char_position)
-		{
-			if (has_forbidden_n (content,
-								char_position - content))
-				return (false);
-			else
-				return (true);
-		}
-	return (true);
-}
-
-static int	copy_array_n_content (char **new_array, char **array, int len)
-{
-	int	i;
-
-	i = -1;
-	while (++i < len)
+	index = search_index (content, *array);
+	if (index >= 0)
 	{
-		new_array[i] = ft_strdup (array[i]);
-		if (!(new_array[i]))
+		if (unset_this (index, array) == -1)
 		{
-			free_str_n_array (new_array, i);
-			return (perror_int ("@copy_content.malloc:", -1));
+			if (equal_pos)
+				free (content);
+			return (-1);
 		}
 	}
-	return (i);
+	if (equal_pos)
+		free (content);
+	return (1);
 }
 
-char	**append_array(char *str, char **array)
+int	update_env_exports(char *content, t_exec_context *ctxt)
 {
-	int		len;
-	int		i;
-	char	**new_array;
+	char	*pos;
 
-	if (!array)
-		len = 0;
+	pos = ft_strrchr (content, '=');
+	if (pos)
+	{
+		if (search_and_unset (content, &ctxt->exports, pos) == -1)
+			return (-1);
+		if (search_and_unset (content, &ctxt->envp, pos) == -1)
+			return (-1);
+		ctxt->envp = append_array (content, ctxt->envp);
+		if (!ctxt->envp)
+			return (-1);
+	}
 	else
-		len = get_len_array (array);
-	new_array = malloc (sizeof (char *) * (len + 2));
-	if (!new_array)
-		return (perror_null ("@append_array.malloc:"));
-	i = copy_array_n_content (new_array, array, len);
-	if (i == -1)
-		return (NULL);
-	new_array[i] = ft_strdup (str);
-	if (!new_array[i])
-		return (perror_null ("@append_array.ft_strdup:"));
-	new_array[i + 1] = NULL;
-	free_str_array (array);
-	return (new_array);
+	{
+		if (search_key_index (content, ctxt->envp) >= 0
+			|| search_index (content, ctxt->exports) >= 0)
+			return (1);
+		ctxt->exports = append_array (content, ctxt->exports);
+		if (!ctxt->exports)
+			return (-1);
+	}
+	return (1);
 }
+
+/*
+
+int	update_env_exports(char *content, t_exec_context *ctxt)
+{
+	int		index;
+	char	*pos;
+	char	*first_part;
+	char	*temp;
+
+	index = -1;
+	pos = ft_strrchr (content, '=');
+	first_part = NULL;
+
+	// if it has =
+	if (pos)
+	{
+		// search in exports and unset
+		temp = ft_substr (content, 0, pos - content);
+		if (!temp)
+			return (perror_int ("@update_env_export.temp:ft_substring: ", -1));
+		index = search_index (temp, ctxt->exports);
+		if (index >= 0)
+		{
+			free (temp);
+			if (unset_this (index, &(ctxt->exports)) == -1)
+				return (-1);
+		}
+		else
+		{
+			free (temp);
+			// search envp and unset
+			first_part = ft_substr (content, 0, pos - content);
+			if (!first_part)
+				return (perror_int ("@update_env_export.ft_substring: ", -1));
+			index = search_key_index (first_part, ctxt->envp);
+			if (index >= 0)
+			{
+				if (unset_this (index, &(ctxt->envp)) == -1)
+				{
+					free (first_part);
+					return (-1);
+				}
+			}
+			free (first_part);
+		}
+		// append to envp
+		ctxt->envp = append_array (content, ctxt->envp);
+		if (!ctxt->envp)
+			return (-1);
+	}
+	// if it NO =
+	else 
+	{
+		// search existing EXPORTs and unset
+		index = search_index (content, ctxt->exports);
+		if (index >= 0)
+		{
+			if (unset_this (index, &(ctxt->exports)) == -1)
+				return (-1);
+		}
+		else
+		{
+			// you should search in env
+				// if exist > return
+			index = search_key_index (content, ctxt->envp);
+			if (index >= 0)
+				return (1);
+		}
+		// append to exports
+		ctxt->exports = append_array (content, ctxt->exports);
+		if (!ctxt->exports)
+			return (-1);
+	}
+	return (1);
+}
+
+*/

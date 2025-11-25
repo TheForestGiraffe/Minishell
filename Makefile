@@ -6,7 +6,7 @@
 #    By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2025/11/24 12:21:37 by kalhanaw         ###   ########.fr        #
+#    Updated: 2025/11/25 13:38:12 by kalhanaw         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,6 +78,7 @@ BUILTIN_SRC = $(addprefix $(BUILTIN_SRC_DIR)/, fn_built_in_cd.c \
 												fn_built_in_unset_II.c \
 												fn_built_in_export_I.c \
 												fn_built_in_export_II.c \
+												fn_built_in_export_III.c \
 												fn_built_in_pwd.c \
 												fn_quick_sort.c \
 												fn_builtin_echo.c \
