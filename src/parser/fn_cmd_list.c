@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/13 17:34:10 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/17 23:30:07 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,30 @@ int	cmd_lst_delete_list(t_cmd **head)
 			if (unlink(cur->infile) != 0)
 				perror ("@cmd_lst_delete_list.unlink:");
 		}
+		free(cur->infile);
+		free(cur->outfile);
+		free(cur);
+		cur = next;
+	}
+	*head = NULL;
+	return (1);
+}
+
+int	cmd_lst_delete_list_no_unlink(t_cmd **head)
+{
+	t_cmd	*cur;
+	t_cmd	*next;
+
+	if (!head || !*head)
+	{
+		ft_putstr_fd("@cmd_lst_delete_list: NULL input", 2);
+		return (-1);
+	}
+	cur = *head;
+	while (cur)
+	{
+		next = cur->next;
+		tls_delete_list(&cur->argv);
 		free(cur->infile);
 		free(cur->outfile);
 		free(cur);

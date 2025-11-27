@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:55:08 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/13 18:39:06 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/17 22:17:53 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	run_external(t_cmd *cmd_lst, char **envp)
 	{
 		full_path = get_full_path (cmd_lst, envp);
 		if (!full_path)
-			return (-1);
+			return (127);
 	}
 	args = get_args (cmd_lst);
 	if (!args)
@@ -106,6 +106,7 @@ int	run_external(t_cmd *cmd_lst, char **envp)
 int	run_cmd(t_exec_context *exec_context)
 {
 	int	builtin;
+	int	ret;
 
 	if (!*exec_context->cmd_lst->argv->content)
 		return (0);
@@ -120,7 +121,6 @@ int	run_cmd(t_exec_context *exec_context)
 		exec_context->exit_state = -1;
 		return (-1);
 	}
-	if (run_external (exec_context->cmd_lst, exec_context->envp) == -1)
-		return (-1);
-	return (1);
+	ret = run_external(exec_context->cmd_lst, exec_context->envp);
+	return (ret);
 }

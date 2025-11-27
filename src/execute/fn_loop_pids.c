@@ -3,17 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   fn_loop_pids.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:55:08 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/12 12:31:42 by kalhanaw         ###   ########.fr       */
+/*   Updated: 2025/11/18 01:46:41 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "local_execute.h"
+#include "signals.h"
+#include "envp.h"
+#include "parser.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h>
+
+static void	cleanup_after_child(int **fd_array, int count, int *process_id_arr,
+								t_exec_context *exec_context)
+{
+	clear_fd_array(fd_array, count - 1);
+	free(process_id_arr);
+	cmd_lst_delete_list(&exec_context->cmd_lst);
+}
 
 static int	connect_pipes(int **fd_array, int pos, int count)
 {
@@ -42,36 +54,45 @@ static int	connect_pipes(int **fd_array, int pos, int count)
 static int	run_on_child(int **fd_array, t_exec_context *exec_context,
 						int i, int count)
 {
-	if (connect_pipes (fd_array, i, count - 1) == -1)
+	int	ret;
+
+	signal(SIGQUIT, SIG_DFL);
+	if (connect_pipes(fd_array, i, count - 1) == -1)
 		return (-1);
-	if (assign_input_output (exec_context->cmd_lst) == -1
-		|| run_cmd (exec_context) == -1)
-		exit (-1);
-	exit (1);
+	if (assign_input_output (exec_context->cmd_lst) == -1)
+	{
+		free_envp(exec_context->envp);
+		return (-1);
+	}
+	ret = run_cmd(exec_context);
+	free_envp(exec_context->envp);
+	return (ret);
 }
 
 int	loop_pids(int *process_id_arr, int **fd_array,
 			int count, t_exec_context *exec_context)
 {
-	int	i;
+	int		i;
+	int		ret;
+	t_cmd	*head;
 
+	head = exec_context->cmd_lst;
 	i = 0;
 	while (i < count)
 	{
 		process_id_arr[i] = fork();
 		if (process_id_arr[i] == -1)
-		{
-			perror ("@loop_pids.fork");
-			return (-1);
-		}
+			return (perror ("@loop_pids.fork"), -1);
 		if (process_id_arr[i] == 0)
-			return (run_on_child (fd_array, exec_context, i, count));
-		else
 		{
-			if (exec_context->cmd_lst->next)
-				exec_context->cmd_lst = exec_context->cmd_lst->next;
-			i++;
+			ret = run_on_child(fd_array, exec_context, i, count);
+			exec_context->cmd_lst = head;
+			cleanup_after_child(fd_array, count, process_id_arr, exec_context);
+			exit(ret);
 		}
+		if (exec_context->cmd_lst->next)
+			exec_context->cmd_lst = exec_context->cmd_lst->next;
+		i++;
 	}
 	return (1);
 }

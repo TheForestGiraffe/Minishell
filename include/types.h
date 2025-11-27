@@ -47,6 +47,7 @@ typedef struct s_cmd
 
 typedef struct s_exec_context
 {
+	t_token	*token_lst;
 	t_cmd	*cmd_lst;
 	char	**envp;
 	char	**exports;

@@ -6,12 +6,13 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/13 17:42:12 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/18 14:21:51 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "local_parser.h"
 #include "libft.h"
+#include "envp.h"
 #include <stdio.h>
 #include <readline/readline.h>
 #include <stdlib.h>
@@ -19,7 +20,16 @@
 #include <fcntl.h>
 #include <signal.h>
 #include "signals.h"
-#include "echoctl.h"
+
+static void	cleanup_and_exit(t_exec_context *exec_context,
+				int fd, int exit_code)
+{
+	free_envp(exec_context->envp);
+	cmd_lst_delete_list_no_unlink(&(exec_context->cmd_lst));
+	tls_delete_list(&exec_context->token_lst);
+	close(fd);
+	exit(exit_code);
+}
 
 static int	check_and_expand_line(char **line, t_token_type type,
 		t_exec_context *exec_context)
@@ -68,7 +78,6 @@ void	execute_heredoc(char *filename, t_token *tok,
 	int	ret;
 
 	signal(SIGINT, heredoc_handle_sigint);
-	disable_ctrl_chars_printing();
 	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0600);
 	if (fd == -1)
 		exit (EXIT_FAILURE);
@@ -76,14 +85,8 @@ void	execute_heredoc(char *filename, t_token *tok,
 	{
 		ret = read_and_write_line(tok, fd, exec_context);
 		if (ret == -1)
-		{
-			close(fd);
-			exit(EXIT_FAILURE);
-		}
+			cleanup_and_exit(exec_context, fd, EXIT_FAILURE);
 		if (ret == 1)
-		{
-			close(fd);
-			exit(EXIT_SUCCESS);
-		}
+			cleanup_and_exit(exec_context, fd, EXIT_SUCCESS);
 	}
 }

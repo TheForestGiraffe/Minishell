@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echoctl.h                                          :+:      :+:    :+:   */
+/*   envp.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 19:41:33 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/13 16:20:18 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/17 18:13:57 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ECHOCTL_H
-# define ECHOCTL_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-void	disable_ctrl_chars_printing(void);
-void	enable_ctrl_chars_printing(void);
+char	**copy_envp(char **envp);
+void	free_envp(char **envp);
 
 #endif
