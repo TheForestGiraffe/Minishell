@@ -6,7 +6,7 @@
 #    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2025/11/16 00:02:09 by pecavalc         ###   ########.fr        #
+#    Updated: 2025/11/17 18:13:28 by pecavalc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,13 @@ NAME = minishell
 SRC_DIR = src
 OBJ_DIR = obj
 
-SRC = $(addprefix $(SRC_DIR)/, fn_signals.c fn_echoctl.c)
+SRC = $(addprefix $(SRC_DIR)/, fn_signals.c fn_echoctl.c fn_envp.c)
 SRC_MAIN = $(addprefix $(SRC_DIR)/,minishell.c)
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 OBJ_MAIN = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_MAIN))
 
 HEADER_DIR = include
-HEADER = $(HEADER_DIR)/signals.h $(HEADER_DIR)/echoctl.h
+HEADER = $(HEADER_DIR)/signals.h $(HEADER_DIR)/echoctl.h $(HEADER_DIR)/envp.h
 
 # Parser
 PARSER_SRC_DIR = src/parser
@@ -71,7 +71,9 @@ EXECUTE_HEADERS = $(PUB_EXECUTE_HEADER_DIR)/execute.h \
 
 # built_in
 BUILTIN_SRC_DIR = src/builtin
-BUILTIN_SRC = $(addprefix $(BUILTIN_SRC_DIR)/,fn_built_in_env.c \
+BUILTIN_SRC = $(addprefix $(BUILTIN_SRC_DIR)/, fn_built_in_cd.c \
+												fn_built_in_cd_update_env.c \
+												fn_built_in_env.c \
 												fn_built_in_II.c \
 												fn_built_in_III.c \
 												fn_builtin_echo.c \
@@ -138,6 +140,14 @@ $(BUILTIN_OBJ_DIR)/%.o: $(BUILTIN_SRC_DIR)/%.c $(BUILTIN_HEADERS)
 # Trigger Libft compilation
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
+
+# Valgrind rules
+valgrind: $(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
+	--suppressions=readline_suppress.supp ./$(NAME)
+valchild: $(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
+	--track-fds=yes --trace-children=yes --suppressions=readline_suppress.supp ./$(NAME)
 
 # --------------------------------------------------------------------------- #
 # 								UNIT TESTS									  #

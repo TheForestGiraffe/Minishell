@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/15 16:52:57 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/15 20:29:59 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/17 13:35:11 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,13 @@ int	run_builtin_in_parent(t_exec_context *exec_context)
 		perror("@run_builtin_in_parent.dup");
 		return (-1);
 	}
-	if (assign_input_output(exec_context->cmd_lst) == -1
-		|| search_builtin_functions(exec_context) == -1)
+	if (assign_input_output(exec_context->cmd_lst) == -1)
+	{
+		restore_fds(stdin, stdout);
+		return (-1);
+	}
+	exec_context->exit_state = search_builtin_functions(exec_context);
+	if (exec_context->exit_state == -1)
 	{
 		restore_fds(stdin, stdout);
 		return (-1);

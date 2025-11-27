@@ -1,39 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fn_built_in_III.c                                  :+:      :+:    :+:   */
+/*   envp.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/18 09:44:01 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/16 14:26:56 by pecavalc         ###   ########.fr       */
+/*   Created: 2025/10/05 19:41:33 by kalhanaw          #+#    #+#             */
+/*   Updated: 2025/11/17 18:13:57 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <parser.h>
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-int	builtin_pwd(t_exec_context *ctxt)
-{
-	char	*text;
+char	**copy_envp(char **envp);
+void	free_envp(char **envp);
 
-	(void)ctxt;
-	text = getcwd(NULL, 0);
-	if (!text)
-	{
-		perror ("@pwd:");
-		return (-1);
-	}
-	printf ("%s\n", text);
-	free (text);
-	return (1);
-}
-
-int	builtin_export(t_exec_context *ctxt)
-{
-	(void)ctxt;
-	printf("builtin_export called\n");
-	return (1);
-}
+#endif

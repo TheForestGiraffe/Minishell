@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 11:54:30 by plima             #+#    #+#             */
-/*   Updated: 2025/11/15 20:22:05 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/17 18:12:15 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "parser.h"
 #include "execute.h"
 #include "echoctl.h"
+#include "envp.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>
@@ -52,7 +53,9 @@ int	main(int argc, char **argv, char **envp)
 	atexit(enable_ctrl_chars_printing);
 	(void)argc;
 	(void)argv;
-	exec_context.envp = envp;
+	exec_context.envp = copy_envp(envp);
+	if (!exec_context.envp)
+		return (-1);
 	exec_context.exit_state = 0;
 	exec_context.cmd_lst = NULL;
 	exec_context.main_pid = getpid();
@@ -63,5 +66,6 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 	}
 	rl_clear_history();
+	free_envp(exec_context.envp);
 	return (0);
 }
