@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/13 17:05:04 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/15 15:53:49 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <fcntl.h>
 #include <signal.h>
 #include "signals.h"
+#include <sys/wait.h>
 
 static int	get_exit_code(t_exec_context *exec_context, int status)
 {

@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:54:07 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/13 17:32:29 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/15 23:40:36 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,8 @@ int		*create_process_id_arr(int ***fd_array, int count);
 // fn_loop_pids.c
 int		loop_pids(int *process_id_arr, int **fd_array,
 			int count, t_exec_context *exec_context);
+
+// fn_run_builtin_in_parent.c
+int	run_builtin_in_parent(t_exec_context *exec_context);
 
 #endif

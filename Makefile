@@ -6,7 +6,7 @@
 #    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2025/11/13 17:36:35 by pecavalc         ###   ########.fr        #
+#    Updated: 2025/11/15 19:14:09 by pecavalc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ EXECUTE_SRC_DIR = src/execute
 EXECUTE_SRC = $(addprefix $(EXECUTE_SRC_DIR)/,execute.c \
 												fn_assign_input_output.c \
 												fn_get_full_path.c \
+												fn_run_builtin_in_parent.c \
 												fn_run_cmd.c \
 												fn_create_process_id_arr.c \
 												fn_loop_pids.c \
@@ -73,6 +74,7 @@ BUILTIN_SRC_DIR = src/builtin
 BUILTIN_SRC = $(addprefix $(BUILTIN_SRC_DIR)/,fn_built_in_II.c \
 												fn_built_in_III.c \
 												fn_builtin_echo.c \
+												fn_builtin_exit.c \
 												search_builtin_functions.c)
 
 BUILTIN_OBJ_DIR = obj/builtin

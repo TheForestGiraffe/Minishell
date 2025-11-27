@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 11:54:30 by plima             #+#    #+#             */
-/*   Updated: 2025/11/13 17:20:38 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/15 20:22:05 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	main(int argc, char **argv, char **envp)
 	exec_context.envp = envp;
 	exec_context.exit_state = 0;
 	exec_context.cmd_lst = NULL;
+	exec_context.main_pid = getpid();
 	while (1)
 	{
 		disable_ctrl_chars_printing();

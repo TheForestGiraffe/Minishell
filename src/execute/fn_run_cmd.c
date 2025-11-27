@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 16:55:08 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/13 14:06:19 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:39:06 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,7 @@ int	run_cmd(t_exec_context *exec_context)
 
 	if (!*exec_context->cmd_lst->argv->content)
 		return (0);
-	builtin = search_builtin_functions (exec_context->cmd_lst,
-			exec_context->envp);
+	builtin = search_builtin_functions (exec_context);
 	if (builtin == 1)
 	{
 		exec_context->exit_state = 1;

@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 09:44:01 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/06 14:07:45 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:33:09 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,18 @@
 #include <stdlib.h>
 #include <parser.h>
 
-int	builtin_cd(t_cmd *cmd_lst, char **envp)
+int	builtin_cd(t_exec_context *ctxt)
 {
-	(void)cmd_lst;
-	(void)envp;
+	(void)ctxt;
 	printf("builtin_cd called\n");
 	return (1);
 }
 
-int	builtin_pwd(t_cmd *cmd_lst, char **envp)
+int	builtin_pwd(t_exec_context *ctxt)
 {
 	char	*text;
 
-	(void)cmd_lst;
-	(void)envp;
+	(void)ctxt;
 	text = getcwd(NULL, 0);
 	if (!text)
 	{
@@ -40,10 +38,9 @@ int	builtin_pwd(t_cmd *cmd_lst, char **envp)
 	return (1);
 }
 
-int	builtin_export(t_cmd *cmd_lst, char **envp)
+int	builtin_export(t_exec_context *ctxt)
 {
-	(void)cmd_lst;
-	(void)envp;
+	(void)ctxt;
 	printf("builtin_export called\n");
 	return (1);
 }

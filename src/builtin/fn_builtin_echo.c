@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 09:44:01 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/06 14:10:01 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:34:58 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,18 @@ static void	print_loop(t_cmd *cmd_lst)
 	}
 }
 
-int	builtin_echo(t_cmd *cmd_lst, char **envp)
+int	builtin_echo(t_exec_context *ctxt)
 {
 	t_token	*start;
 	bool	no_newline;
 
-	(void)envp;
 	no_newline = false;
-	start = cmd_lst->argv;
-	cmd_lst->argv = cmd_lst->argv->next;
-	no_newline_check (cmd_lst, &no_newline);
-	print_loop (cmd_lst);
+	start = ctxt->cmd_lst->argv;
+	ctxt->cmd_lst->argv = ctxt->cmd_lst->argv->next;
+	no_newline_check (ctxt->cmd_lst, &no_newline);
+	print_loop (ctxt->cmd_lst);
 	if (!no_newline)
 		printf ("\n");
-	cmd_lst->argv = start;
+	ctxt->cmd_lst->argv = start;
 	return (1);
 }
