@@ -6,7 +6,7 @@
 #    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2025/11/15 19:14:09 by pecavalc         ###   ########.fr        #
+#    Updated: 2025/11/16 00:02:09 by pecavalc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,8 @@ EXECUTE_HEADERS = $(PUB_EXECUTE_HEADER_DIR)/execute.h \
 
 # built_in
 BUILTIN_SRC_DIR = src/builtin
-BUILTIN_SRC = $(addprefix $(BUILTIN_SRC_DIR)/,fn_built_in_II.c \
+BUILTIN_SRC = $(addprefix $(BUILTIN_SRC_DIR)/,fn_built_in_env.c \
+												fn_built_in_II.c \
 												fn_built_in_III.c \
 												fn_builtin_echo.c \
 												fn_builtin_exit.c \

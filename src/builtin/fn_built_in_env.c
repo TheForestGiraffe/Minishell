@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fn_built_in_II.c                                   :+:      :+:    :+:   */
+/*   fn_built_in_env.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/18 09:44:07 by kalhanaw          #+#    #+#             */
-/*   Updated: 2025/11/16 00:02:28 by pecavalc         ###   ########.fr       */
+/*   Created: 2025/11/15 23:59:17 by pecavalc          #+#    #+#             */
+/*   Updated: 2025/11/16 00:02:31 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "parser.h"
+#include "types.h"
+#include "libft.h"
 
-int	builtin_unset(t_exec_context *ctxt)
+int	builtin_env(t_exec_context *exec_context)
 {
-	(void)ctxt;
-	printf("builtin_unset called\n");
+	int	i;
+
+	i = 0;
+	while (exec_context->envp[i])
+		ft_printf("%s\n", exec_context->envp[i++]);
 	return (1);
 }
