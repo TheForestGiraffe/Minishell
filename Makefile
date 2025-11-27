@@ -6,7 +6,7 @@
 #    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2025/11/17 18:13:28 by pecavalc         ###   ########.fr        #
+#    Updated: 2025/11/18 14:22:33 by pecavalc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,13 @@ NAME = minishell
 SRC_DIR = src
 OBJ_DIR = obj
 
-SRC = $(addprefix $(SRC_DIR)/, fn_signals.c fn_echoctl.c fn_envp.c)
+SRC = $(addprefix $(SRC_DIR)/, fn_signals.c fn_envp.c)
 SRC_MAIN = $(addprefix $(SRC_DIR)/,minishell.c)
 OBJ = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 OBJ_MAIN = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_MAIN))
 
 HEADER_DIR = include
-HEADER = $(HEADER_DIR)/signals.h $(HEADER_DIR)/echoctl.h $(HEADER_DIR)/envp.h
+HEADER = $(HEADER_DIR)/signals.h $(HEADER_DIR)/envp.h
 
 # Parser
 PARSER_SRC_DIR = src/parser

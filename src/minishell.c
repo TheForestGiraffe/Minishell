@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 11:54:30 by plima             #+#    #+#             */
-/*   Updated: 2025/11/17 23:38:16 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/18 14:21:38 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "signals.h"
 #include "parser.h"
 #include "execute.h"
-#include "echoctl.h"
 #include "envp.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -50,7 +49,6 @@ int	main(int argc, char **argv, char **envp)
 	t_exec_context	exec_context;
 
 	register_signals();
-	atexit(enable_ctrl_chars_printing);
 	(void)argc;
 	(void)argv;
 	exec_context.envp = copy_envp(envp);
@@ -62,7 +60,6 @@ int	main(int argc, char **argv, char **envp)
 	exec_context.main_pid = getpid();
 	while (1)
 	{
-		disable_ctrl_chars_printing();
 		if (read_parse_and_execute(&exec_context))
 			break ;
 	}

@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 12:57:06 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/17 23:45:39 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/11/18 14:21:51 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include <fcntl.h>
 #include <signal.h>
 #include "signals.h"
-#include "echoctl.h"
 
 static void	cleanup_and_exit(t_exec_context *exec_context,
 				int fd, int exit_code)
@@ -79,7 +78,6 @@ void	execute_heredoc(char *filename, t_token *tok,
 	int	ret;
 
 	signal(SIGINT, heredoc_handle_sigint);
-	disable_ctrl_chars_printing();
 	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0600);
 	if (fd == -1)
 		exit (EXIT_FAILURE);
