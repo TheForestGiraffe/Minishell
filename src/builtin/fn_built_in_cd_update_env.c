@@ -6,7 +6,7 @@
 /*   By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 14:26:12 by pecavalc          #+#    #+#             */
-/*   Updated: 2025/11/17 15:43:02 by pecavalc         ###   ########.fr       */
+/*   Updated: 2025/12/01 10:38:07 by pecavalc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ static int	assemble_key_value_pair(char **key_value_pair, char *key,
 
 	*key_value_pair = ft_strjoin(key, "=");
 	if (!(*key_value_pair))
-	{
-		ft_putstr_fd("@set_envp: 1st ft_strjoin failed", 2);
-		return (-1);
-	}
+		return (ft_putstr_fd("@set_envp: 1st ft_strjoin failed", 2), -1);
 	tmp = *key_value_pair;
 	pwd_tmp = NULL;
 	if (value)
