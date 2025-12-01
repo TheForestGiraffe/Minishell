@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kalhanaw <kalhanaw@student.42berlin.de>    +#+  +:+       +#+         #
+#    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2025/11/25 13:38:12 by kalhanaw         ###   ########.fr        #
+#    Updated: 2025/12/01 10:44:34 by pecavalc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -169,7 +169,7 @@ $(TEST_OBJ_DIR):
 # NORMINETTE
 test_norm:
 	norminette -R CheckForbiddenHeaderSource \
-	$(SRC_DIR) $(HEADER_DIR)
+	$(SRC_DIR) $(HEADER_DIR) $(LIBFT_DIR)/srcs $(LIBFT_DIR)/include
 
 # PARSER TESTS
 
