@@ -46,6 +46,13 @@ The shell implements the following built-in commands:
 make
 ```
 
+### Clean
+```bash
+make clean
+make fclean
+make re
+```
+
 ### Run
 ```bash
 ./minishell
