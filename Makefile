@@ -6,7 +6,7 @@
 #    By: pecavalc <pecavalc@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 15:25:57 by pecavalc          #+#    #+#              #
-#    Updated: 2026/02/04 00:11:38 by pecavalc         ###   ########.fr        #
+#    Updated: 2026/02/04 02:16:27 by pecavalc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,7 +98,7 @@ BUILTIN_HEADERS = $(PUB_BUILTIN_HEADER_DIR)/builtin.h \
 OBJ_DIRS = $(OBJ_DIR) $(PARSER_OBJ_DIR) $(EXECUTE_OBJ_DIR) $(BUILTIN_OBJ_DIR)
 
 # Libft
-LIBFT_DIR = libs/Libft-2.1.1
+LIBFT_DIR = libs/Libft-2.2.1
 LIBFT_HEADER_DIR = $(LIBFT_DIR)/include
 LIBFT = $(LIBFT_DIR)/libft.a
 
